@@ -57,8 +57,11 @@ Restaurants can manage their menus, reservations, orders, customers, and surplus
 ## Project Structure
 
 DineEase/
+
 ├── frontend/
+
 ├── backend/
+
 ├── database/
 ├── docs/
 └── README.md
