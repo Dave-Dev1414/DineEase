@@ -39,3 +39,40 @@ img {
   display: block;
   max-width: 100%;
 }
+.reveal-card {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 700ms ease, transform 700ms ease;
+}
+
+.reveal-card:nth-child(1) {
+  transition-delay: 300ms;
+}
+
+.reveal-card:nth-child(2) {
+  transition-delay: 600;
+}
+
+.reveal-card:nth-child(3) {
+  transition-delay: 900ms;
+}
+
+.reveal-card:nth-child(4) {
+  transition-delay: 1200ms;
+}
+
+.reveal-card.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-card:nth-child(1) {
+  transition-delay: 0ms;
+}
+
+.reveal-card:nth-child(2) {
+  transition-delay: 250ms;
+}
+
+.reveal-card:nth-child(3) {
+  transition-delay: 500ms;
+}

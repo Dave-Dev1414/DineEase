@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { Link } from "react-router-dom"
 
 function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -10,11 +11,11 @@ function Navbar() {
       </a>
 
       <div className="hidden items-center gap-8 md:flex">
-        <a href="/" className="text-sm font-medium">Home</a>
-        <a href="/discover" className="text-sm font-medium">Discover</a>
-        <a href="/reserve" className="text-sm font-medium">Reserve</a>
-        <a href="/order" className="text-sm font-medium">Order</a>
-        <a href="/bookings" className="text-sm font-medium">Bookings</a>
+        <Link to="/" className="text-sm font-medium transition-colors duration-300 hover:text-red-600">Home</Link>
+       <Link to="/discover" className="text-sm font-medium transition-colors duration-300 hover:text-red-600">Discover</Link>
+        <Link to="/reserve" className="text-sm font-medium transition-colors duration-300 hover:text-red-600">Reserve</Link>
+       <Link to="/order" className="text-sm font-medium transition-colors duration-300 hover:text-red-600">Order</Link>
+       <Link to="/bookings" className="text-sm font-medium transition-colors duration-300 hover:text-red-600">Bookings</Link>
       </div>
 
       <a href="/reserve" className="hidden bg-black px-5 py-3 text-sm font-semibold text-white md:block">
