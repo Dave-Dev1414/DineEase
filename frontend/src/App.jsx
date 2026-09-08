@@ -1,8 +1,13 @@
+import Navbar from "./components/Navbar"
+
 function App() {
   return (
-    <div className="text-4xl font-bold">
-      DineEase
-    </div>
+    <>
+      <Navbar />
+      <main>
+        <h1>DineEase</h1>
+      </main>
+    </>
   )
 }
 
