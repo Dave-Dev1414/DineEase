@@ -210,21 +210,21 @@ The DineEase platform owner and administrators will manage:
 DineEase is planned around a separated frontend and backend architecture.
 
 
-DineEase
-│
+DineEase/
+
 ├── React Frontend
-│
+
 ├── PHP Backend API
-│
+
 ├── MySQL Database
-│
-├── External Services
-│   ├── Places / Restaurant APIs
-│   ├── WhatsApp Business Platform
-│   ├── AI Provider
-│   ├── Payment Gateway
-│   └── Maps / Location Services
-│
+
+├── External Services/
+   ├── Places / Restaurant APIs
+   ├── WhatsApp Business Platform
+   ├── AI Provider
+   ├── Payment Gateway
+   └── Maps / Location Services
+
 └── Administration & Management
 
 DineEase/
