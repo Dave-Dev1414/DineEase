@@ -40,11 +40,11 @@ const [restaurantsVisible, setRestaurantsVisible] = useState(false)
       <section className="px-6 pb-16 pt-10 md:px-10 md:pb-24 md:pt-16">
         <div className="mx-auto grid max-w-7xl items-center gap-12 lg:grid-cols-2 lg:gap-16">
           <div>
-            <p className="mb-5 text-sm font-semibold uppercase tracking-[0.2em] text-red-600">
+            <p className="mb-5 text-base font-medium uppercase tracking-[0.22em] text-red-600">
               Dine. Order. Reserve. Rescue.
             </p>
 
-            <h1 className="max-w-3xl font-serif text-5xl font-semibold leading-[0.95] tracking-tight sm:text-6xl md:text-7xl lg:text-8xl">
+            <h1 className="max-w-3xl font-serif text-5xl font-medium leading-[0.9] tracking-tight sm:text-6xl md:text-7xl lg:text-8xl">
               Great food.
               <br />
               Better experiences.
@@ -58,7 +58,7 @@ const [restaurantsVisible, setRestaurantsVisible] = useState(false)
             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
               <a
                 href="/discover"
-                className="bg-black px-7 py-4 text-center text-sm font-semibold text-white transition hover:bg-stone-800"
+                className="bg-black px-7 py-4 text-center text-sm font-semibold text-white transition hover:bg-red-800"
               >
                 Discover restaurants
               </a>
@@ -306,6 +306,97 @@ const [restaurantsVisible, setRestaurantsVisible] = useState(false)
             </a>
           </div>
         </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+   <section className="border-t border-black/10 px-6 py-20 md:px-10 md:py-28">
+  <div className="mx-auto grid max-w-7xl items-center gap-12 lg:grid-cols-2 lg:gap-20">
+    <div>
+      <p className="text-base font-semibold uppercase tracking-[0.2em] text-red-600 md:text-lg">
+        DineEase Surplus
+      </p>
+      <h2 className="mt-4 max-w-2xl font-serif text-4xl font-semibold leading-tight sm:text-5xl md:text-6xl">
+        Good food shouldn't go to waste.
+      </h2>
+      <p className="mt-6 max-w-xl text-base leading-7 text-stone-600 md:text-lg md:leading-8">
+        Restaurants can turn surplus food into extra revenue, offer it at a
+        discount, or connect it with approved organisations that can put it to
+        good use.
+      </p>
+      <a
+        href="/discover"
+        className="mt-8 inline-flex bg-black px-7 py-4 text-base font-semibold text-white transition-all duration-500 hover:bg-red-600"
+      >
+        Explore surplus food
+      </a>
+    </div>
+
+    <div className="relative">
+      <div className="aspect-[4/3] overflow-hidden bg-stone-200">
+        <img
+          src="https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=1200&q=85"
+          alt="Fresh food prepared for serving"
+          className="h-full w-full object-cover transition-transform duration-700 hover:scale-105"
+        />
+      </div>
+
+      <div className="absolute bottom-5 left-5 max-w-xs bg-white p-5 shadow-lg sm:bottom-8 sm:left-8">
+        <p className="text-base font-semibold uppercase tracking-[0.15em] text-red-600">
+          Rescue more
+        </p>
+        <p className="mt-2 font-serif text-2xl font-semibold">
+          Discount. Donate. Repeat.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+   <section className="border-t border-black/10 px-6 py-20 md:px-10 md:py-28">
+  <div className="mx-auto max-w-7xl">
+    <div className="max-w-3xl">
+      <p className="text-base font-semibold uppercase tracking-[0.2em] text-red-600 md:text-lg">
+        How it works
+      </p>
+      <h2 className="mt-4 font-serif text-4xl font-semibold leading-tight sm:text-5xl md:text-6xl">
+        From finding a place to enjoying the meal.
+      </h2>
+    </div>
+
+    <div className="mt-14 grid gap-px bg-black/10 md:grid-cols-3">
+      <article className="bg-[#fffaf2] p-7 md:p-10">
+        <span className="font-serif text-5xl font-semibold text-red-600">01</span>
+        <h3 className="mt-8 font-serif text-3xl font-semibold">
+          Find
+        </h3>
+        <p className="mt-4 text-base leading-7 text-stone-600 md:text-lg">
+          Discover restaurants, browse menus, and find something that fits
+          your taste and plans.
+        </p>
+      </article>
+
+      <article className="bg-[#fffaf2] p-7 md:p-10">
+        <span className="font-serif text-5xl font-semibold text-red-600">02</span>
+        <h3 className="mt-8 font-serif text-3xl font-semibold">
+          Choose
+        </h3>
+        <p className="mt-4 text-base leading-7 text-stone-600 md:text-lg">
+          Reserve your table or order directly from the restaurant without
+          unnecessary back-and-forth.
+        </p>
+      </article>
+
+      <article className="bg-[#fffaf2] p-7 md:p-10">
+        <span className="font-serif text-5xl font-semibold text-red-600">03</span>
+        <h3 className="mt-8 font-serif text-3xl font-semibold">
+          Enjoy
+        </h3>
+        <p className="mt-4 text-base leading-7 text-stone-600 md:text-lg">
+          Keep track of your reservations and orders while DineEase takes
+          care of the details.
+        </p>
       </article>
     </div>
   </div>

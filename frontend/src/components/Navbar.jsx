@@ -6,9 +6,9 @@ function Navbar() {
 
   return (
     <nav className="relative flex items-center justify-between px-6 py-5 md:px-10">
-      <a href="/" className="font-serif text-2xl font-semibold">
-        DineEase
-      </a>
+      <Link href="/" className="font-serif text-2xl font-medium tracking-tight">
+        <span className="text-black">Dine</span>  <span className="text-red-600">Ease</span>
+      </Link>
 
       <div className="hidden items-center gap-8 md:flex">
         <Link to="/" className="text-sm font-medium transition-colors duration-300 hover:text-red-600">Home</Link>
@@ -40,7 +40,7 @@ function Navbar() {
             <a href="/reserve" className="text-sm font-medium">Reserve</a>
             <a href="/order" className="text-sm font-medium">Order</a>
             <a href="/bookings" className="text-sm font-medium">Bookings</a>
-            <a href="/reserve" className="bg-black px-5 py-3 text-center text-sm font-semibold text-white">
+            <a href="/reserve" className="bg-black transition-colors duration-300 hover:bg-red-800 px-5 py-3 text-center text-sm font-semibold text-white">
               Reserve a table
             </a>
           </div>
