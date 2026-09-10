@@ -1,4 +1,6 @@
 import { useEffect, useRef, useState } from "react"
+import { Link } from "react-router-dom"
+import Footer from "../components/Footer"
 
 function Home() {
   const crossRef = useRef(null)
@@ -401,6 +403,86 @@ const [restaurantsVisible, setRestaurantsVisible] = useState(false)
     </div>
   </div>
 </section>
+
+  <section className="px-6 py-20 md:px-10 md:py-28">
+  <div className="mx-auto grid max-w-7xl items-stretch border border-stone-300 lg:grid-cols-2">
+    <div className="flex flex-col justify-center px-7 py-14 md:px-12 md:py-16 lg:px-16">
+      <p className="mb-5 text-bold font-semibold uppercase tracking-[0.2em] text-red-600">
+        Partner with DineEase
+      </p>
+      <h2 className="max-w-xl font-serif text-4xl font-medium leading-[0.95] tracking-tight sm:text-5xl md:text-6xl">
+        Your restaurant.
+        <br />
+        More possibilities.
+      </h2>
+      <p className="mt-7 max-w-xl text-base leading-7 text-stone-600 md:text-lg">
+        Reach more diners, manage reservations and orders, and turn surplus
+        food into revenue or meaningful donations, all from one platform.
+      </p>
+      <div className="mt-9">
+        <Link
+          to="/partner"
+          className="inline-flex items-center justify-center bg-red-600 px-7 py-4 text-base font-semibold text-white transition-colors duration-300 hover:bg-red-700"
+        >
+          Partner with DineEase
+        </Link>
+      </div>
+    </div>
+
+    <div className="min-h-[420px] bg-stone-200">
+      <img
+        src="https://therestaurantwarehouse.com/cdn/shop/articles/xBujJW3pOq_1_1200x670.webp?v=1775772033"
+        alt="Restaurant interior"
+        className="h-full w-full object-cover"
+      />
+    </div>
+  </div>
+</section>
+
+   <section
+  className="relative overflow-hidden bg-cover bg-center px-6 py-24 md:px-10 md:py-32"
+  style={{
+    backgroundImage:
+      "url('https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?auto=format&fit=crop&w=1800&q=85')",
+  }}
+>
+  <div className="absolute inset-0 bg-red-950/90"></div>
+
+  <div className="relative mx-auto max-w-5xl text-center text-white">
+    <p className="mb-5 text-base font-medium uppercase tracking-[0.22em] text-red-300">
+      Your next dining experience
+    </p>
+
+    <h2 className="font-serif text-5xl font-medium leading-[0.95] tracking-tight sm:text-6xl md:text-7xl">
+      Good food is waiting.
+    </h2>
+
+    <p className="mx-auto mt-7 max-w-2xl text-base leading-7 text-white/80 md:text-lg">
+      Discover somewhere new, reserve your table, order what you love,
+      and make every meal count.
+    </p>
+
+  <div className="mt-9 flex flex-col justify-center gap-3 sm:flex-row">
+  <Link
+    to="/discover"
+    className="border border-white bg-white/10 px-7 py-4 text-base font-semibold text-white backdrop-blur-sm transition-colors duration-300 hover:bg-white/20"
+  >
+    Discover restaurants
+  </Link>
+
+  <Link
+    to="/order"
+    className="border border-white/50 bg-black/10 px-7 py-4 text-base font-semibold text-white backdrop-blur-sm transition-colors duration-300 hover:border-white hover:bg-white/10"
+  >
+    Order food
+  </Link>
+</div>
+  </div>
+</section>
+
+    <Footer />
+
+ 
     </main>
   )
 }
