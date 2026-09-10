@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react"
 import { Link } from "react-router-dom"
+import { ArrowUpRight } from "lucide-react"
 import Footer from "../components/Footer"
 
 function Home() {
@@ -58,19 +59,19 @@ const [restaurantsVisible, setRestaurantsVisible] = useState(false)
             </p>
 
             <div className="hero-actions mt-9 flex flex-col gap-3 sm:flex-row">
-              <a
-                href="/discover"
+              <Link
+                to="/discover"
                 className="bg-black px-7 py-4 text-center text-base font-semibold text-white transition hover:bg-red-800"
               >
                 Discover restaurants
-              </a>
+              </Link>
 
-              <a
-                href="/reserve"
+              <Link
+                to="/reserve"
                 className="border border-black px-7 py-4 text-center text-base font-semibold transition hover:bg-black hover:text-white"
               >
                 Reserve a table
-              </a>
+              </Link>
             </div>
           </div>
 
@@ -129,7 +130,7 @@ const [restaurantsVisible, setRestaurantsVisible] = useState(false)
           </p>
         </article>
 
-        <article className={`reveal-card ${crossVisible ? "visible" : ""} bg-[#fffaf2] p-7 md:p-9 transition-all duration-100 ease-out hover:-translate-y-1 hover:bg-white hover:shadow-lg`}>
+        <article className={`reveal-card ${crossVisible ? "visible" : ""} bg-[#fffaf2] p-7 md:p-9 transition-all duration-700 ease-out hover:-translate-y-1 hover:bg-white hover:shadow-lg`}>
           <span className="text-sm font-semibold text-red-600">02</span>
           <h3 className="font-serif text-3xl font-medium tracking-tight">
             Reserve
@@ -181,15 +182,15 @@ const [restaurantsVisible, setRestaurantsVisible] = useState(false)
         </h2>
       </div>
 
-      <a
-        href="/discover"
+      <Link
+        to="/discover"
         className="group inline-flex w-fit items-center gap-3 text-base font-semibold transition-all duration-300 hover:gap-5"
       >
         Explore all restaurants
         <span className="transition-transform duration-300 group-hover:translate-x-1">
-          →
+          <ArrowUpRight className="transition-transform duration-300 group-hover:translate-x-1" size={18} />
         </span>
-      </a>
+      </Link>
     </div>
 
     <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -222,12 +223,12 @@ const [restaurantsVisible, setRestaurantsVisible] = useState(false)
               ₦₦₦
             </span>
 
-            <a
-              href="/reserve"
+            <Link
+              to="/reserve"
               className="bg-black px-5 py-3 text-sm font-semibold text-white transition-all duration-300 hover:bg-red-600"
             >
               Reserve
-            </a>
+            </Link>
           </div>
         </div>
       </article>
@@ -261,12 +262,12 @@ const [restaurantsVisible, setRestaurantsVisible] = useState(false)
               ₦₦
             </span>
 
-            <a
-              href="/reserve"
+            <Link
+              to="/reserve"
               className="bg-black px-5 py-3 text-sm font-semibold text-white transition-all duration-300 hover:bg-red-600"
             >
               Reserve
-            </a>
+            </Link>
           </div>
         </div>
       </article>
@@ -297,15 +298,15 @@ const [restaurantsVisible, setRestaurantsVisible] = useState(false)
 
           <div className="mt-6 flex items-center justify-between border-t border-black/10 pt-5">
             <span className="text-sm font-medium text-stone-500">
-              ₦₦ₙ
+              ₦₦
             </span>
 
-            <a
-              href="/reserve"
+            <Link
+              to="/reserve"
               className="bg-black px-5 py-3 text-sm font-semibold text-white transition-all duration-300 hover:bg-red-600"
             >
               Reserve
-            </a>
+            </Link>
           </div>
         </div>
       </article>
@@ -327,12 +328,12 @@ const [restaurantsVisible, setRestaurantsVisible] = useState(false)
         discount, or connect it with approved organisations that can put it to
         good use.
       </p>
-      <a
-        href="/discover"
+      <Link
+        to="/discover"
         className="mt-8 inline-flex bg-black px-7 py-4 text-base font-semibold text-white transition-all duration-500 hover:bg-red-600"
       >
         Explore surplus food
-      </a>
+      </Link>
     </div>
 
     <div className="relative">
@@ -407,7 +408,7 @@ const [restaurantsVisible, setRestaurantsVisible] = useState(false)
   <section className="px-6 py-20 md:px-10 md:py-28">
   <div className="mx-auto grid max-w-7xl items-stretch border border-stone-300 lg:grid-cols-2">
     <div className="flex flex-col justify-center px-7 py-14 md:px-12 md:py-16 lg:px-16">
-      <p className="mb-5 text-bold font-semibold uppercase tracking-[0.2em] text-red-600">
+      <p className="mb-5 font-semibold uppercase tracking-[0.2em] text-red-600">
         Partner with DineEase
       </p>
       <h2 className="max-w-xl font-serif text-4xl font-medium leading-[0.95] tracking-tight sm:text-5xl md:text-6xl">

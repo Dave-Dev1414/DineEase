@@ -229,21 +229,6 @@ DineEase/
    ├── Payment Gateway
 
    └── Maps / Location Services
-   
+
 
 └── Administration & Management
-
-DineEase/
-
-├── frontend/
-
-├── backend/
-
-├── database/
-
-
-├── docs/
-
-
-
-└── README.md
