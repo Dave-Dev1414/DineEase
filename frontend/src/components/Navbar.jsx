@@ -7,7 +7,7 @@ function Navbar() {
   return (
     <nav className="relative flex items-center justify-between px-6 py-5 md:px-10">
       <Link href="/" className="font-serif text-2xl font-medium tracking-tight">
-        <span className="text-black">Dine</span>  <span className="text-red-600">Ease</span>
+        <span className="text-black">Dine</span><span className="text-red-600">Ease</span>
       </Link>
 
       <div className="hidden items-center gap-8 md:flex">

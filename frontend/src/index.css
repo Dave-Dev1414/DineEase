@@ -76,3 +76,72 @@ img {
 .reveal-card:nth-child(3) {
   transition-delay: 500ms;
 }
+.hero-eyebrow,
+.hero-title,
+.hero-description,
+.hero-actions {
+  opacity: 0;
+  transform: translateY(24px);
+  animation: heroEnter 800ms ease-out forwards;
+}
+
+.hero-eyebrow {
+  animation-delay: 100ms;
+}
+
+.hero-title {
+  animation-delay: 250ms;
+}
+
+.hero-description {
+  animation-delay: 400ms;
+}
+
+.hero-actions {
+  animation-delay: 550ms;
+}
+@keyframes heroEnter {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero-image-wrap {
+  opacity: 0;
+  transform: translateY(30px) scale(0.98);
+  animation: heroImageEnter 1000ms ease-out 250ms forwards;
+}
+
+@keyframes heroImageEnter {
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+.hero-image {
+  transform: scale(1.04);
+  animation: heroImageScale 1200ms ease-out 250ms forwards;
+}
+
+@keyframes heroImageScale {
+  to {
+    transform: scale(1);
+  }
+}
+.hero-card {
+  opacity: 0;
+  transform: translateY(18px);
+  animation: heroCardEnter 700ms ease-out 900ms forwards;
+}
+
+.hero-card-delay {
+  animation-delay: 1050ms;
+}
+
+@keyframes heroCardEnter {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

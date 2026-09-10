@@ -40,48 +40,48 @@ const [restaurantsVisible, setRestaurantsVisible] = useState(false)
       <section className="px-6 pb-16 pt-10 md:px-10 md:pb-24 md:pt-16">
         <div className="mx-auto grid max-w-7xl items-center gap-12 lg:grid-cols-2 lg:gap-16">
           <div>
-            <p className="mb-5 text-base font-medium uppercase tracking-[0.22em] text-red-600">
+            <p className="hero-eyebrow mb-5 text-base font-medium uppercase tracking-[0.22em] text-red-600">
               Dine. Order. Reserve. Rescue.
             </p>
 
-            <h1 className="max-w-3xl font-serif text-5xl font-medium leading-[0.9] tracking-tight sm:text-6xl md:text-7xl lg:text-8xl">
+            <h1 className="hero-title max-w-3xl font-serif text-5xl font-medium leading-[0.9] tracking-tight sm:text-6xl md:text-7xl lg:text-8xl">
               Great food.
               <br />
               Better experiences.
             </h1>
 
-            <p className="mt-7 max-w-xl text-base leading-7 text-stone-600 md:text-lg">
+            <p className="hero-description mt-7 max-w-xl text-base leading-7 text-stone-600 md:text-lg">
               Discover restaurants, reserve your table, order your favourites,
               and help good food find another purpose instead of going to waste.
             </p>
 
-            <div className="mt-9 flex flex-col gap-3 sm:flex-row">
+            <div className="hero-actions mt-9 flex flex-col gap-3 sm:flex-row">
               <a
                 href="/discover"
-                className="bg-black px-7 py-4 text-center text-sm font-semibold text-white transition hover:bg-red-800"
+                className="bg-black px-7 py-4 text-center text-base font-semibold text-white transition hover:bg-red-800"
               >
                 Discover restaurants
               </a>
 
               <a
                 href="/reserve"
-                className="border border-black px-7 py-4 text-center text-sm font-semibold transition hover:bg-black hover:text-white"
+                className="border border-black px-7 py-4 text-center text-base font-semibold transition hover:bg-black hover:text-white"
               >
                 Reserve a table
               </a>
             </div>
           </div>
 
-          <div className="relative">
+          <div className="hero-image-wrap relative">
             <div className="aspect-[4/5] overflow-hidden bg-stone-200 sm:aspect-[5/4] lg:aspect-[4/5]">
               <img
                 src="https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?auto=format&fit=crop&w=1200&q=85"
                 alt="A beautifully prepared restaurant dish"
-                className="h-full w-full object-cover transition duration-700 hover:scale-105"
+                className="hero-image h-full w-full object-cover transition duration-700 hover:scale-105"
               />
             </div>
 
-            <div className="absolute bottom-5 left-5 bg-white p-5 shadow-lg sm:bottom-8 sm:left-8">
+            <div className="hero-card absolute bottom-5 left-5 bg-white p-5 shadow-lg sm:bottom-8 sm:left-8">
               <p className="text-xs font-semibold uppercase tracking-[0.15em] text-stone-500">
                 Loved by diners
               </p>
@@ -90,7 +90,7 @@ const [restaurantsVisible, setRestaurantsVisible] = useState(false)
               </p>
             </div>
 
-            <div className="absolute right-5 top-5 bg-white p-5 shadow-lg sm:right-8 sm:top-8">
+            <div className="hero-card hero-card-delay absolute right-5 top-5 bg-white p-5 shadow-lg sm:right-8 sm:top-8">
               <p className="text-xs font-semibold uppercase tracking-[0.15em] text-stone-500">
                 Restaurants
               </p>
@@ -106,11 +106,11 @@ const [restaurantsVisible, setRestaurantsVisible] = useState(false)
   <div className="mx-auto max-w-7xl">
     <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
       <div>
-        <p className="text-sm font-semibold uppercase tracking-[0.2em] text-red-600">
+        <p className="text-base font-semibold uppercase tracking-[0.2em] text-red-600">
           One platform
         </p>
 
-        <h2 className="mt-4 max-w-lg font-serif text-4xl font-semibold leading-tight sm:text-5xl md:text-6xl">
+        <h2 className="font-serif text-4xl font-medium leading-[0.95] tracking-tight sm:text-5xl md:text-6xl">
           Everything you need to dine better.
         </h2>
       </div>
@@ -118,7 +118,7 @@ const [restaurantsVisible, setRestaurantsVisible] = useState(false)
       <div className="grid gap-px bg-black/10 sm:grid-cols-2">
         <article className={`reveal-card ${crossVisible ? "visible" : ""} bg-[#fffaf2] p-7 md:p-9 transition-all duration-700 ease-out hover:-translate-y-1 hover:bg-white hover:shadow-lg`}>
           <span className="text-sm font-semibold text-red-600">01</span>
-          <h3 className="mt-8 font-serif text-3xl font-semibold">
+         <h3 className="font-serif text-3xl font-medium tracking-tight">
             Discover
           </h3>
           <p className="mt-4 leading-7 text-stone-600">
@@ -129,7 +129,7 @@ const [restaurantsVisible, setRestaurantsVisible] = useState(false)
 
         <article className={`reveal-card ${crossVisible ? "visible" : ""} bg-[#fffaf2] p-7 md:p-9 transition-all duration-100 ease-out hover:-translate-y-1 hover:bg-white hover:shadow-lg`}>
           <span className="text-sm font-semibold text-red-600">02</span>
-          <h3 className="mt-8 font-serif text-3xl font-semibold">
+          <h3 className="font-serif text-3xl font-medium tracking-tight">
             Reserve
           </h3>
           <p className="mt-4 leading-7 text-stone-600">
@@ -140,7 +140,7 @@ const [restaurantsVisible, setRestaurantsVisible] = useState(false)
 
         <article className={`reveal-card ${crossVisible ? "visible" : ""} bg-[#fffaf2] p-7 md:p-9 transition-all duration-700 ease-out hover:-translate-y-1 hover:bg-white hover:shadow-lg`}>
           <span className="text-sm font-semibold text-red-600">03</span>
-          <h3 className="mt-8 font-serif text-3xl font-semibold">
+          <h3 className="font-serif text-3xl font-medium tracking-tight">
             Order
           </h3>
           <p className="mt-4 leading-7 text-stone-600">
@@ -151,7 +151,7 @@ const [restaurantsVisible, setRestaurantsVisible] = useState(false)
 
         <article className={`reveal-card ${crossVisible ? "visible" : ""} bg-[#fffaf2] p-7 md:p-9 transition-all duration-700 ease-out hover:-translate-y-1 hover:bg-white hover:shadow-lg`}>
           <span className="text-sm font-semibold text-red-600">04</span>
-          <h3 className="mt-8 font-serif text-3xl font-semibold">
+         <h3 className="font-serif text-3xl font-medium tracking-tight">
             Rescue
           </h3>
           <p className="mt-4 leading-7 text-stone-600">
@@ -202,7 +202,7 @@ const [restaurantsVisible, setRestaurantsVisible] = useState(false)
 
         <div className="p-6">
           <div className="flex items-center justify-between gap-4">
-            <h3 className="font-serif text-2xl font-semibold">
+            <h3 className="font-serif text-2xl font-medium tracking-tight">
               The Ember Room
             </h3>
 
@@ -241,7 +241,7 @@ const [restaurantsVisible, setRestaurantsVisible] = useState(false)
 
         <div className="p-6">
           <div className="flex items-center justify-between gap-4">
-            <h3 className="font-serif text-2xl font-semibold">
+            <h3 className="font-serif text-2xl font-medium tracking-tight">
               Maison 24
             </h3>
 
@@ -280,7 +280,7 @@ const [restaurantsVisible, setRestaurantsVisible] = useState(false)
 
         <div className="p-6">
           <div className="flex items-center justify-between gap-4">
-            <h3 className="font-serif text-2xl font-semibold">
+            <h3 className="font-serif text-2xl font-medium tracking-tight">
               Olive & Stone
             </h3>
 
