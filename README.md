@@ -219,11 +219,17 @@ DineEase/
 ├── MySQL Database
 
 ├── External Services/
+
    ├── Places / Restaurant APIs
+
    ├── WhatsApp Business Platform
+
    ├── AI Provider
+
    ├── Payment Gateway
+
    └── Maps / Location Services
+   
 
 └── Administration & Management
 
