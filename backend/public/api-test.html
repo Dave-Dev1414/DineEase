@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DineEase API Tester</title>
+</head>
+<body>
+
+    <h1>DineEase API Tester</h1>
+
+    <form id="signupForm" novalidate>
+        <label>
+            Name
+            <input type="text" id="name">
+        </label>
+
+        <br><br>
+
+        <label>
+            Email
+            <input type="email" id="email">
+        </label>
+
+        <br><br>
+
+        <label>
+            Password
+            <input type="password" id="password">
+        </label>
+
+        <br><br>
+
+        <button type="submit">Create Account</button>
+    </form>
+
+    <h2>Response</h2>
+    <pre id="response"></pre>
+
+
+    <script>
+    const form = document.getElementById("signupForm");
+    const responseBox = document.getElementById("response");
+
+    form.addEventListener("submit", async function (e) {
+        e.preventDefault();
+
+        const data = {
+            name: document.getElementById("name").value,
+            email: document.getElementById("email").value,
+            password: document.getElementById("password").value
+        };
+
+        const response = await fetch("/dineease/api/users", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
+        });
+
+        const result = await response.json();
+
+        responseBox.textContent = JSON.stringify(result, null, 2);
+    });
+</script>
+</body>
+</html>
