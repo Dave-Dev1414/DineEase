@@ -1,14 +1,10 @@
 <?php
 
-require_once __DIR__ . "/../config/database.php";
-require_once __DIR__ . "/../controllers/UserController.php";
+$requestUri = parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
 
-$userController = new UserController($pdo);
+if ($requestUri === "/dineease/api/users") {
+    require_once __DIR__ . "/../routes/User.php";
+    exit;
+}
 
-$userId = $userController->createUser(
-    "Test User",
-    "controller-test@example.com",
-    "test123"
-);
-
-echo "User created through controller with ID: " . $userId;
+echo "Route not found";
