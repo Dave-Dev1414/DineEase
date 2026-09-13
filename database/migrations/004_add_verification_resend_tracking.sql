@@ -1,0 +1,3 @@
+ALTER TABLE users
+ADD COLUMN verification_email_sent_at TIMESTAMP NULL
+AFTER email_verification_expires_at;

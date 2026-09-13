@@ -38,30 +38,58 @@
     <pre id="response"></pre>
 
 
-    <script>
+   <script>
     const form = document.getElementById("signupForm");
     const responseBox = document.getElementById("response");
 
     form.addEventListener("submit", async function (e) {
         e.preventDefault();
 
-        const data = {
-            name: document.getElementById("name").value,
-            email: document.getElementById("email").value,
-            password: document.getElementById("password").value
-        };
+        const name = document.getElementById("name").value.trim();
+        const email = document.getElementById("email").value.trim();
+        const password = document.getElementById("password").value;
 
-        const response = await fetch("/dineease/api/users", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(data)
-        });
+        try {
+            const response = await fetch("/dineease/api/users", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    name,
+                    email,
+                    password
+                })
+            });
 
-        const result = await response.json();
+            const result = await response.json();
 
-        responseBox.textContent = JSON.stringify(result, null, 2);
+           if (result.success === true) {
+           alert("SUCCESS: redirecting now");
+
+             window.location.assign(
+            `http://localhost:5173/check-email?email=${encodeURIComponent(email)}`
+            );
+
+         return;
+              }
+
+            responseBox.textContent = JSON.stringify(
+                result,
+                null,
+                2
+            );
+
+        } catch (error) {
+            responseBox.textContent = JSON.stringify(
+                {
+                    success: false,
+                    message: "Unable to connect to DineEase."
+                },
+                null,
+                2
+            );
+        }
     });
 </script>
 </body>

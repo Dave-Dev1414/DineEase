@@ -61,7 +61,8 @@ class User
     $stmt = $this->db->prepare(
         "UPDATE users
          SET email_verification_token = :token,
-             email_verification_expires_at = :expires_at
+             email_verification_expires_at = :expires_at,
+             verification_email_sent_at = NOW()
          WHERE id = :id"
     );
 
@@ -118,5 +119,27 @@ class User
     $stmt->execute([
         "id" => $userId
     ]);
+}
+
+      public function canResendVerificationEmail(int $userId): bool
+{
+    $stmt = $this->db->prepare(
+        "SELECT verification_email_sent_at
+         FROM users
+         WHERE id = :id
+         LIMIT 1"
+    );
+
+    $stmt->execute([
+        "id" => $userId
+    ]);
+
+    $user = $stmt->fetch();
+
+    if (!$user || !$user["verification_email_sent_at"]) {
+        return true;
+    }
+
+    return strtotime($user["verification_email_sent_at"]) <= time() - 60;
 }
 }

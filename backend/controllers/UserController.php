@@ -4,16 +4,19 @@ require_once __DIR__ . "/../models/User.php";
 require_once __DIR__ . "/../exceptions/ValidationException.php";
 require_once __DIR__ . "/../exceptions/DuplicateEmailException.php";
 require_once __DIR__ . "/../services/EmailVerificationService.php";
+require_once __DIR__ . "/../services/EmailService.php";
 
 class UserController
 {
     private User $userModel;
     private EmailVerificationService $emailVerificationService;
+    private EmailService $emailService;
 
     public function __construct(PDO $db)
     {
         $this->userModel = new User($db);
         $this->emailVerificationService = new EmailVerificationService();
+        $this->emailService = new EmailService();
     }
 
     public function createUser(string $name, string $email, string $password): int
@@ -66,8 +69,13 @@ if (strlen($password) < 8) {
         $expiresAt
          );
 
-         
-       return $userId;
+         $this->emailService->sendVerificationEmail(
+        $name,
+        $email,
+        $token
+           );
+
+         return $userId;
        
        }
        public function verifyEmail(string $token): void
@@ -76,10 +84,54 @@ if (strlen($password) < 8) {
 
     if (!$user) {
         throw new ValidationException(
-            "This verification link is invalid or has expired."
+            "This verification link is invalid, has been used or has expired."
         );
     }
 
     $this->userModel->verifyEmail((int) $user["id"]);
 }
-      }
+public function resendVerificationEmail(string $email): void
+{
+    $email = trim($email);
+
+    $user = $this->userModel->findByEmail($email);
+
+    if (!$user) {
+        throw new ValidationException(
+            "We couldn't find an account with that email address."
+        );
+    }
+
+    if ($user["email_verified_at"]) {
+        throw new ValidationException(
+            "This email address has already been verified."
+        );
+    }
+
+    if (!$this->userModel->canResendVerificationEmail((int) $user["id"])) {
+        throw new ValidationException(
+            "Please wait before requesting another verification email."
+        );
+    }
+
+    $token = $this->emailVerificationService->generateToken();
+
+    $expiresAt = date(
+        "Y-m-d H:i:s",
+        strtotime("+1 hour")
+    );
+
+    $this->userModel->saveVerificationToken(
+        (int) $user["id"],
+        $token,
+        $expiresAt
+    );
+
+  $this->emailService->sendVerificationEmail(
+    $name,
+    $email,
+    $token,
+    true
+);
+}
+}

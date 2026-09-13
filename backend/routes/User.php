@@ -31,6 +31,34 @@ if ($_SERVER["REQUEST_METHOD"] === "GET" && isset($_GET["token"])) {
     exit;
 }
 
+if (
+    $_SERVER["REQUEST_METHOD"] === "POST" &&
+    isset($_GET["action"]) &&
+    $_GET["action"] === "resend-verification"
+) {
+    $data = json_decode(file_get_contents("php://input"), true);
+
+    $email = $data["email"] ?? "";
+
+    try {
+        $userController->resendVerificationEmail($email);
+
+        echo json_encode([
+            "success" => true,
+            "message" => "A new verification email has been sent."
+        ]);
+    } catch (ValidationException $e) {
+        http_response_code(400);
+
+        echo json_encode([
+            "success" => false,
+            "message" => $e->getMessage()
+        ]);
+    }
+
+    exit;
+}
+
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $data = json_decode(file_get_contents("php://input"), true);
 
@@ -46,29 +74,39 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         );
 
         http_response_code(201);
+
         echo json_encode([
             "success" => true,
             "message" => "Account created successfully.",
             "user_id" => $userId
         ]);
-    } catch (Exception $e) {
+    } catch (DuplicateEmailException $e) {
+        http_response_code(409);
+
+        echo json_encode([
+            "success" => false,
+            "message" => $e->getMessage()
+        ]);
+    } catch (ValidationException $e) {
         http_response_code(400);
 
-    echo json_encode([
-        "success" => false,
-        "message" => $e->getMessage()
-    ]);
-} catch (DuplicateEmailException $e) {
-    http_response_code(409);
+        echo json_encode([
+            "success" => false,
+            "message" => $e->getMessage()
+        ]);
+    } catch (Exception $e) {
+        http_response_code(500);
 
-    echo json_encode([
-        "success" => false,
-        "message" => $e->getMessage()
-    ]);
-      }
+        echo json_encode([
+            "success" => false,
+         "message" => $e->getMessage()
+        ]);
+    }
 
     exit;
 }
+
+http_response_code(405);
 
 echo json_encode([
     "success" => false,
