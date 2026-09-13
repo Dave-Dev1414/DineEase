@@ -5,6 +5,9 @@ import Discover from "./pages/Discover"
 import Reserve from "./pages/Reserve"
 import Order from "./pages/Order"
 import Bookings from "./pages/Bookings"
+import VerifyEmail from "./pages/VerifyEmail";
+import CheckYourEmail from "./pages/CheckYourEmail"
+import Footer from "./components/Footer"
 
 function App() {
   return (
@@ -17,7 +20,11 @@ function App() {
         <Route path="/reserve" element={<Reserve />} />
         <Route path="/order" element={<Order />} />
         <Route path="/bookings" element={<Bookings />} />
+        <Route path="/verify-email" element={<VerifyEmail />} />
+        <Route path="/check-email" element={<CheckYourEmail />} />
       </Routes>
+
+      <Footer />
     </BrowserRouter>
   )
 }

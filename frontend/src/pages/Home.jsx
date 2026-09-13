@@ -368,7 +368,7 @@ const [restaurantsVisible, setRestaurantsVisible] = useState(false)
       </h2>
     </div>
 
-    <div className="mt-14 grid gap-px bg-black/10 md:grid-cols-3">
+    <div className="mt-14 grid gap-px bg-black/10 md:grid-cols-2 lg:grid-cols-3">
       <article className="bg-[#fffaf2] p-7 md:p-10">
         <span className="font-serif text-5xl font-semibold text-red-600">01</span>
         <h3 className="mt-8 font-serif text-3xl font-semibold">
@@ -430,7 +430,7 @@ const [restaurantsVisible, setRestaurantsVisible] = useState(false)
       </div>
     </div>
 
-    <div className="min-h-[420px] bg-stone-200">
+    <div className="min-h-[320px] md:min-h-[380px] lg:min-h-[420px] bg-stone-200">
       <img
         src="https://therestaurantwarehouse.com/cdn/shop/articles/xBujJW3pOq_1_1200x670.webp?v=1775772033"
         alt="Restaurant interior"
