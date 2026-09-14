@@ -22,39 +22,40 @@ function CheckYourEmail() {
   }, [seconds])
 
   const handleResend = async () => {
-  if (seconds > 0 || resending || !email) return
+    if (seconds > 0 || resending || !email) return
 
-  setResending(true)
-  setMessage("")
+    setResending(true)
+    setMessage("")
 
-  try {
-    const response = await fetch(
-      "http://localhost/dineease/api/users?action=resend-verification",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          email: email
-        })
+    try {
+      const response = await fetch(
+        "http://localhost/dineease/api/users?action=resend-verification",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            email: email
+          })
+        }
+      )
+
+      const data = await response.json()
+
+      if (data.success) {
+        setMessage("A new verification email has been sent.")
+        setSeconds(60)
+      } else {
+        setMessage(data.message || "Unable to resend verification email.")
       }
-    )
-
-    const data = await response.json()
-
-    if (data.success) {
-      setMessage("A new verification email has been sent.")
-      setSeconds(60)
-    } else {
-      setMessage(data.message || "Unable to resend verification email.")
+    } catch (error) {
+      console.error("Resend verification error:", error)
+      setMessage("Unable to connect to DineEase. Please try again.")
+    } finally {
+      setResending(false)
     }
-  } catch (error) {
-    setMessage("Unable to connect to DineEase. Please try again.")
-  } finally {
-    setResending(false)
   }
-}
 
   const maskEmail = email => {
     if (!email) return ""
@@ -78,13 +79,9 @@ function CheckYourEmail() {
 
         <div className="flex justify-center mb-10">
           <div className="relative w-16 h-16">
-
             <div className="absolute inset-0 rounded-full border border-red-600/20 animate-ping"></div>
-
             <div className="absolute inset-2 rounded-full border border-red-600/30 animate-[pulse_2s_ease-in-out_infinite]"></div>
-
             <div className="absolute inset-5 rounded-full bg-red-600 animate-[pulse_2s_ease-in-out_infinite]"></div>
-
           </div>
         </div>
 
