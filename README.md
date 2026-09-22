@@ -164,37 +164,60 @@ Different verification levels may apply depending on what a business is allowed 
 
 ## Error Logging & Observability
 
-DineEase will include a centralized error logging and observability system designed to capture meaningful application and infrastructure failures across the platform.
+DineEase will include a centralized **private developer error monitoring system** for authorized developers and platform administrators, with the primary operational purpose of allowing the DineEase platform owner to monitor production failures even when away from the development system.
 
-The system will automatically classify and group captured errors into:
+The system is **not a customer-facing feature**. Customers and ordinary users will never have access to raw error logs, stack traces, internal technical details, or the developer error dashboard.
 
-- Frontend errors
-- Backend errors
+### What Gets Logged
 
-Errors that are primarily caused by an individual user's network or local environment, such as an image failing to load because of poor connectivity, should not be logged as DineEase platform errors unless there is evidence that the failure originates from DineEase itself.
-
-Meaningful errors that may be captured include:
+The system is intended to capture failures that originate from DineEase itself, including:
 
 - Frontend application/runtime errors
 - Authentication and sign-in failures caused by DineEase
 - API failures
 - PHP/server-side exceptions and failures
 - Database/PDO errors
-- External service failures such as email/Brevo integration failures
-- Server responses indicating an application failure
-- Other failures originating from DineEase infrastructure or application code
+- External service failures such as Brevo/email integration failures
+- Other application, backend, infrastructure, or integration failures originating from DineEase
 
-Each error record is planned to include useful diagnostic context such as timestamp, source, error type, page or endpoint, HTTP status where applicable, and technical details safe for logging.
+Failures primarily caused by an individual user's local environment or network should generally **not** be treated as DineEase platform errors. For example, an image failing to load because a user's internet connection is too poor should not create a platform error log unless there is evidence that the failure originated from DineEase.
 
-A future DineEase error dashboard will allow authorized developers/administrators to inspect these records.
+### Automatic Error Classification
+
+Captured errors will be automatically grouped into:
+
+- **Frontend Errors**
+- **Backend Errors**
+
+Additional metadata can identify the specific source, such as authentication, API, database, external service, or other application components.
+
+Planned diagnostic information includes:
+
+- Timestamp
+- Frontend or backend classification
+- Error type
+- Severity
+- Source/component
+- Page or endpoint
+- HTTP status code where applicable
+- Safe technical details
+- Occurrence count and related grouping information
+
+### Private Developer Error Dashboard
+
+A future **Error Logs** dashboard will be restricted to authorized developers/platform administrators, with the platform owner as the primary intended user.
+
+The dashboard will allow production failures to be reviewed remotely, including when the developer is away from the development system. Repeated occurrences of the same underlying error should be grouped together rather than appearing as unrelated individual records.
+
+Normal users will receive only safe, user-friendly DineEase error notifications when appropriate.
 
 ### AI Error Explanation
 
-An AI layer is planned to analyze sanitized error records and provide a short plain-language explanation of what the error means, along with useful investigation guidance where appropriate.
+DineEase will eventually include an AI layer that analyzes **sanitized** error records and provides a short plain-language explanation of what the technical error means, with useful investigation guidance where appropriate.
 
-AI will explain errors; it will not be the primary mechanism for detecting or recording them. Error capture and logging must continue to function even when the AI service is unavailable.
+AI will **not** be responsible for detecting or recording errors. Error capture and logging must continue to function even when the AI service is unavailable.
 
-Sensitive information such as passwords, API keys, access tokens, verification tokens, and other credentials must never be included in logs or sent to the AI service.
+Sensitive information such as passwords, API keys, access tokens, verification tokens, session credentials, and other secrets must never be stored in error logs or sent to the AI service.
 
 ## Platform Administration
 
