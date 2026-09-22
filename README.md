@@ -162,6 +162,52 @@ Verification may include:
 
 Different verification levels may apply depending on what a business is allowed to do on the platform.
 
+## Subscription Tiers & Feature Access
+
+DineEase will support tiered access to platform features. Some functionality will remain unavailable until the user's subscription or payment has been successfully confirmed.
+
+Feature access will be handled through a centralized entitlement system rather than scattering subscription checks throughout the application. The application should ask whether an account has access to a specific feature, while the entitlement system determines the answer.
+
+Planned access states may include:
+
+- Free
+- Premium
+- Business tiers
+- Promotional or trial access
+- Enterprise/custom access
+
+The exact tiers and included features will be finalized as the product develops.
+
+### Payment Verification
+
+Premium or paid functionality must not be unlocked solely because the frontend reports that a payment succeeded.
+
+The intended production flow is:
+
+Customer
+→ Payment provider
+→ Payment completed
+→ Payment-provider webhook
+→ DineEase backend
+→ Transaction verification
+→ Subscription/entitlement update
+→ Feature unlocked
+
+Payment states such as successful, failed, cancelled, abandoned, pending, refunded, and expired transactions should be handled explicitly where relevant.
+
+### Development & Testing
+
+DineEase must be testable without requiring real-money transactions during development.
+
+Development will use controlled test accounts and/or development-only membership controls to test different tiers and feature permissions. Payment integrations will use the provider's sandbox/test environment where available.
+
+For example, a development test account should be able to switch between Free and Premium so developers can verify both:
+
+- Premium features remain inaccessible to Free users
+- Premium features become available to Premium users
+
+Development-only controls must never be exposed as a way for production users to grant themselves paid access.
+
 ## Error Logging & Observability
 
 DineEase will include a centralized **private developer error monitoring system** for authorized developers and platform administrators, with the primary operational purpose of allowing the DineEase platform owner to monitor production failures even when away from the development system.
