@@ -44,29 +44,34 @@ function Signup() {
       return
     }
 
-    const response = await fetch(
-      "http://localhost/dineease/api/users",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          name,
-          email,
-          password
-        })
+    try {
+      const response = await fetch(
+        "http://localhost/dineease/api/users",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            name,
+            email,
+            password
+          })
+        }
+      )
+
+      const data = await response.json()
+
+      if (data.success) {
+        navigate(`/check-email?email=${encodeURIComponent(email)}`)
+        return
       }
-    )
 
-    const data = await response.json()
-
-    if (data.success) {
-  navigate(`/check-email?email=${encodeURIComponent(email)}`)
-  return
-}
-
-setNotification(data.message || "Something went wrong. Please try again.")
+      setNotification(data.message || "Something went wrong. Please try again.")
+    } catch (error) {
+      console.error("Signup error:", error)
+      setNotification("Unable to connect to DineEase. Please try again.")
+    }
   }
 
   return (
