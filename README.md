@@ -162,6 +162,40 @@ Verification may include:
 
 Different verification levels may apply depending on what a business is allowed to do on the platform.
 
+## Error Logging & Observability
+
+DineEase will include a centralized error logging and observability system designed to capture meaningful application and infrastructure failures across the platform.
+
+The system will automatically classify and group captured errors into:
+
+- Frontend errors
+- Backend errors
+
+Errors that are primarily caused by an individual user's network or local environment, such as an image failing to load because of poor connectivity, should not be logged as DineEase platform errors unless there is evidence that the failure originates from DineEase itself.
+
+Meaningful errors that may be captured include:
+
+- Frontend application/runtime errors
+- Authentication and sign-in failures caused by DineEase
+- API failures
+- PHP/server-side exceptions and failures
+- Database/PDO errors
+- External service failures such as email/Brevo integration failures
+- Server responses indicating an application failure
+- Other failures originating from DineEase infrastructure or application code
+
+Each error record is planned to include useful diagnostic context such as timestamp, source, error type, page or endpoint, HTTP status where applicable, and technical details safe for logging.
+
+A future DineEase error dashboard will allow authorized developers/administrators to inspect these records.
+
+### AI Error Explanation
+
+An AI layer is planned to analyze sanitized error records and provide a short plain-language explanation of what the error means, along with useful investigation guidance where appropriate.
+
+AI will explain errors; it will not be the primary mechanism for detecting or recording them. Error capture and logging must continue to function even when the AI service is unavailable.
+
+Sensitive information such as passwords, API keys, access tokens, verification tokens, and other credentials must never be included in logs or sent to the AI service.
+
 ## Platform Administration
 
 The DineEase platform owner and administrators will manage:
