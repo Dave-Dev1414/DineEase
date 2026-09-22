@@ -127,11 +127,11 @@ public function resendVerificationEmail(string $email): void
         $expiresAt
     );
 
-  $this->emailService->sendVerificationEmail(
-    $name,
-    $email,
-    $token,
-    true
-);
+    $this->emailService->sendVerificationEmail(
+        $user["name"],
+        $user["email"],
+        $token,
+        true
+    );
 }
 }
