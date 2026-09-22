@@ -164,23 +164,23 @@ Different verification levels may apply depending on what a business is allowed 
 
 ## Subscription Tiers & Feature Access
 
-DineEase will support tiered access to platform features. Some functionality will remain unavailable until the user's subscription or payment has been successfully confirmed.
+DineEase will have three platform tiers:
+
+- **DineEase** — MVP tier
+- **DineEase Pro** — MVP tier
+- **DineEase Premium** — post-launch tier
+
+The **DineEase** and **DineEase Pro** tiers will form the initial MVP offering at launch. **DineEase Premium** is planned for release approximately **5–8 months after launch**, after DineEase has had time to secure users and business partners, validate usage patterns, and establish the platform's initial operating base.
+
+Some functionality will remain unavailable until the user's subscription or payment has been successfully confirmed.
 
 Feature access will be handled through a centralized entitlement system rather than scattering subscription checks throughout the application. The application should ask whether an account has access to a specific feature, while the entitlement system determines the answer.
 
-Planned access states may include:
-
-- Free
-- Premium
-- Business tiers
-- Promotional or trial access
-- Enterprise/custom access
-
-The exact tiers and included features will be finalized as the product develops.
+The exact features included in each tier will be finalized as the MVP and post-launch product develop.
 
 ### Payment Verification
 
-Premium or paid functionality must not be unlocked solely because the frontend reports that a payment succeeded.
+Paid functionality must not be unlocked solely because the frontend reports that a payment succeeded.
 
 The intended production flow is:
 
@@ -201,10 +201,7 @@ DineEase must be testable without requiring real-money transactions during devel
 
 Development will use controlled test accounts and/or development-only membership controls to test different tiers and feature permissions. Payment integrations will use the provider's sandbox/test environment where available.
 
-For example, a development test account should be able to switch between Free and Premium so developers can verify both:
-
-- Premium features remain inaccessible to Free users
-- Premium features become available to Premium users
+For example, a development test account should be able to switch between DineEase, DineEase Pro, and DineEase Premium so developers can verify both restricted and unlocked functionality.
 
 Development-only controls must never be exposed as a way for production users to grant themselves paid access.
 
