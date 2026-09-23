@@ -9,10 +9,13 @@ import Signup from "./pages/Signup"
 import VerifyEmail from "./pages/VerifyEmail"
 import CheckYourEmail from "./pages/CheckYourEmail"
 import Footer from "./components/Footer"
+import Login from "./pages/Login"
 
 function AppContent() {
   const location = useLocation()
-  const hideLayout = location.pathname === "/signup"
+ const hideLayout =
+  location.pathname === "/signup" ||
+  location.pathname === "/login"
 
   return (
     <>
@@ -27,6 +30,7 @@ function AppContent() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/verify-email" element={<VerifyEmail />} />
         <Route path="/check-email" element={<CheckYourEmail />} />
+        <Route path="/login" element={<Login />} />
       </Routes>
 
       {!hideLayout && <Footer />}

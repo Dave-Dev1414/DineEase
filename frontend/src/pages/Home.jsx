@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react"
 import { Link } from "react-router-dom"
 import { ArrowUpRight } from "lucide-react"
-import Footer from "../components/Footer"
+
 
 function Home() {
   const crossRef = useRef(null)
@@ -481,7 +481,7 @@ const [restaurantsVisible, setRestaurantsVisible] = useState(false)
   </div>
 </section>
 
-    <Footer />
+    
 
  
     </main>
