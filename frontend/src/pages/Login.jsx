@@ -37,7 +37,7 @@ function Login() {
         onClose={() => setNotification("")}
       />
 
-      <header className="absolute top-0 left-0 w-full z-20 px-6 md:px-10 py-6 flex items-center justify-between">
+      <header className="relative w-full z-20 px-6 md:px-10 py-6 flex items-center justify-between">
         <button
           type="button"
           onClick={() => navigate("/")}
@@ -62,7 +62,7 @@ function Login() {
         </div>
       </header>
 
-      <section className="min-h-screen grid lg:grid-cols-[0.9fr_1.1fr] items-center px-6 md:px-10 lg:px-16 pt-28 pb-12">
+      <section className="min-h-[calc(100vh-88px)] grid lg:grid-cols-[0.9fr_1.1fr] items-center px-6 md:px-10 lg:px-16 pb-12">
 
         <div className="max-w-xl mx-auto lg:mx-0 w-full z-10">
 
