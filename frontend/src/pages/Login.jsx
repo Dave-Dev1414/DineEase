@@ -37,32 +37,9 @@ function Login() {
         onClose={() => setNotification("")}
       />
 
-      <header className="relative w-full z-20 px-6 md:px-10 py-6 flex items-center justify-between">
-        <button
-          type="button"
-          onClick={() => navigate("/")}
-          className="font-[Bodoni_Moda] text-3xl"
-        >
-          <span className="text-black">Dine</span>
-          <span className="text-red-600">Ease</span>
-        </button>
 
-        <div className="flex items-center gap-4 font-[DM_Sans] text-sm">
-          <span className="hidden sm:block text-gray-600">
-            Don't have an account?
-          </span>
 
-          <button
-            type="button"
-            onClick={() => navigate("/signup")}
-            className="border border-red-600 text-red-600 px-5 py-2.5 hover:bg-red-600 hover:text-white transition-colors duration-200"
-          >
-            Sign up
-          </button>
-        </div>
-      </header>
-
-      <section className="min-h-[calc(100vh-88px)] grid lg:grid-cols-[0.9fr_1.1fr] items-center px-6 md:px-10 lg:px-16 pb-12">
+      <section className="min-h-screen grid lg:grid-cols-[0.9fr_1.1fr] items-center px-6 md:px-10 lg:px-16 py-12">
 
         <div className="max-w-xl mx-auto lg:mx-0 w-full z-10">
 
