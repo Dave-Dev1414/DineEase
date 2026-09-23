@@ -24,6 +24,21 @@ class User
         return $user ?: null;
     }
 
+    public function findById(int $id): ?array
+    {
+        $stmt = $this->db->prepare(
+            "SELECT * FROM users WHERE id = :id LIMIT 1"
+        );
+
+        $stmt->execute([
+            "id" => $id
+        ]);
+
+        $user = $stmt->fetch();
+
+        return $user ?: null;
+    }
+
     public function create(string $name, string $email, string $passwordHash): int
     {
         $stmt = $this->db->prepare(
@@ -41,105 +56,108 @@ class User
     }
 
     public function saveVerificationToken(
-    int $userId,
-    string $token,
-    string $expiresAt
-): void
-{
-    $checkStmt = $this->db->prepare(
-        "SELECT id FROM users WHERE id = :id LIMIT 1"
-    );
+        int $userId,
+        string $token,
+        string $expiresAt
+    ): void
+    {
+        $checkStmt = $this->db->prepare(
+            "SELECT id FROM users WHERE id = :id LIMIT 1"
+        );
 
-    $checkStmt->execute([
-        "id" => $userId
-    ]);
+        $checkStmt->execute([
+            "id" => $userId
+        ]);
 
-    if (!$checkStmt->fetch()) {
-        throw new Exception("User not found.");
+        if (!$checkStmt->fetch()) {
+            throw new Exception("User not found.");
+        }
+
+        $stmt = $this->db->prepare(
+            "UPDATE users
+             SET email_verification_token = :token,
+                 email_verification_expires_at = :expires_at,
+                 verification_email_sent_at = NOW()
+             WHERE id = :id"
+        );
+
+        $stmt->execute([
+            "token" => $token,
+            "expires_at" => $expiresAt,
+            "id" => $userId
+        ]);
     }
 
-    $stmt = $this->db->prepare(
-        "UPDATE users
-         SET email_verification_token = :token,
-             email_verification_expires_at = :expires_at,
-             verification_email_sent_at = NOW()
-         WHERE id = :id"
-    );
+    public function getVerificationToken(int $userId): ?string
+    {
+        $stmt = $this->db->prepare(
+            "SELECT email_verification_token
+             FROM users
+             WHERE id = :id
+             LIMIT 1"
+        );
 
-    $stmt->execute([
-        "token" => $token,
-        "expires_at" => $expiresAt,
-        "id" => $userId
-    ]);
-}
-         public function getVerificationToken(int $userId): ?string
-{
-    $stmt = $this->db->prepare(
-        "SELECT email_verification_token
-         FROM users
-         WHERE id = :id
-         LIMIT 1"
-    );
+        $stmt->execute([
+            "id" => $userId
+        ]);
 
-    $stmt->execute([
-        "id" => $userId
-    ]);
+        $user = $stmt->fetch();
 
-    $user = $stmt->fetch();
-
-    return $user["email_verification_token"] ?? null;
-}
-        public function findByVerificationToken(string $token): ?array
-{
-    $stmt = $this->db->prepare(
-        "SELECT * FROM users
-         WHERE email_verification_token = :token
-         AND email_verification_expires_at > NOW()
-         LIMIT 1"
-    );
-
-    $stmt->execute([
-        "token" => $token
-    ]);
-
-    $user = $stmt->fetch();
-
-    return $user ?: null;
-}
-       public function verifyEmail(int $userId): void
-{
-    $stmt = $this->db->prepare(
-        "UPDATE users
-         SET email_verified_at = NOW(),
-             email_verification_token = NULL,
-             email_verification_expires_at = NULL
-         WHERE id = :id"
-    );
-
-    $stmt->execute([
-        "id" => $userId
-    ]);
-}
-
-      public function canResendVerificationEmail(int $userId): bool
-{
-    $stmt = $this->db->prepare(
-        "SELECT verification_email_sent_at
-         FROM users
-         WHERE id = :id
-         LIMIT 1"
-    );
-
-    $stmt->execute([
-        "id" => $userId
-    ]);
-
-    $user = $stmt->fetch();
-
-    if (!$user || !$user["verification_email_sent_at"]) {
-        return true;
+        return $user["email_verification_token"] ?? null;
     }
 
-    return strtotime($user["verification_email_sent_at"]) <= time() - 60;
-}
+    public function findByVerificationToken(string $token): ?array
+    {
+        $stmt = $this->db->prepare(
+            "SELECT * FROM users
+             WHERE email_verification_token = :token
+             AND email_verification_expires_at > NOW()
+             LIMIT 1"
+        );
+
+        $stmt->execute([
+            "token" => $token
+        ]);
+
+        $user = $stmt->fetch();
+
+        return $user ?: null;
+    }
+
+    public function verifyEmail(int $userId): void
+    {
+        $stmt = $this->db->prepare(
+            "UPDATE users
+             SET email_verified_at = NOW(),
+                 email_verification_token = NULL,
+                 email_verification_expires_at = NULL
+             WHERE id = :id"
+        );
+
+        $stmt->execute([
+            "id" => $userId
+        ]);
+    }
+
+    public function canResendVerificationEmail(int $userId): bool
+    {
+        $stmt = $this->db->prepare(
+            "SELECT verification_email_sent_at
+             FROM users
+             WHERE id = :id
+             LIMIT 1"
+        );
+
+        $stmt->execute([
+            "id" => $userId
+        ]);
+
+        $user = $stmt->fetch();
+
+        if (!$user || !$user["verification_email_sent_at"]) {
+            return true;
+        }
+
+        return strtotime($user["verification_email_sent_at"]) <= time() - 60;
+    }
 }

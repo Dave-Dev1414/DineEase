@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 require_once __DIR__ . "/../config/database.php";
 require_once __DIR__ . "/../controllers/UserController.php";
@@ -59,6 +60,63 @@ if (
     exit;
 }
 
+if (
+    $_SERVER["REQUEST_METHOD"] === "POST" &&
+    isset($_GET["action"]) &&
+    $_GET["action"] === "login"
+) {
+    $data = json_decode(file_get_contents("php://input"), true);
+
+    $email = $data["email"] ?? "";
+    $password = $data["password"] ?? "";
+
+    try {
+        $user = $userController->loginUser($email, $password);
+
+        $_SESSION["user_id"] = $user["id"];
+
+        echo json_encode([
+            "success" => true,
+            "message" => "Login successful.",
+            "user" => [
+                "id" => $user["id"],
+                "name" => $user["name"],
+                "email" => $user["email"]
+            ]
+        ]);
+    } catch (ValidationException $e) {
+        http_response_code(400);
+
+        echo json_encode([
+            "success" => false,
+            "message" => $e->getMessage()
+        ]);
+    } catch (Exception $e) {
+        error_log($e->getMessage());
+
+        http_response_code(500);
+
+        echo json_encode([
+            "success" => false,
+            "message" => "Something went wrong while processing your request."
+        ]);
+    }
+
+    exit;
+}
+
+if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_GET["action"]) && $_GET["action"] === "logout") {
+    session_unset();
+    session_destroy();
+
+    echo json_encode([
+        "success" => true,
+        "message" => "Logout successful."
+    ]);
+
+    exit;
+}
+
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $data = json_decode(file_get_contents("php://input"), true);
 
@@ -104,6 +162,32 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             "message" => "Something went wrong while processing your request."
         ]);
     }
+
+    exit;
+}
+
+if ($_SERVER["REQUEST_METHOD"] === "GET" && isset($_GET["action"]) && $_GET["action"] === "me") {
+    if (!isset($_SESSION["user_id"])) {
+        http_response_code(401);
+
+        echo json_encode([
+            "success" => false,
+            "message" => "You are not logged in."
+        ]);
+
+        exit;
+    }
+
+    $user = $userController->getUserById($_SESSION["user_id"]);
+
+    echo json_encode([
+        "success" => true,
+        "user" => [
+            "id" => $user["id"],
+            "name" => $user["name"],
+            "email" => $user["email"]
+        ]
+    ]);
 
     exit;
 }
