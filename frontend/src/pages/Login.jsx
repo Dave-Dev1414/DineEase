@@ -39,11 +39,15 @@ function Login() {
 
 
 
-      <header className="absolute top-0 left-0 w-full z-20 px-6 md:px-10 py-6 flex items-center justify-between">
-        <div className="font-[Bodoni_Moda] text-3xl">
+      <header className="w-full px-6 md:px-10 py-6 flex items-center justify-between">
+        <button
+          type="button"
+          onClick={() => navigate("/")}
+          className="font-[Bodoni_Moda] text-3xl"
+        >
           <span className="text-black">Dine</span>
           <span className="text-red-600">Ease</span>
-        </div>
+        </button>
 
         <div className="flex items-center gap-4 font-[DM_Sans] text-sm">
           <span className="hidden sm:block text-gray-600">
@@ -52,9 +56,10 @@ function Login() {
 
           <button
             type="button"
+            onClick={() => navigate("/signup")}
             className="border border-red-600 text-red-600 px-5 py-2.5 hover:bg-red-600 hover:text-white transition-colors duration-200"
           >
-            Log in
+            Sign up
           </button>
         </div>
       </header>
