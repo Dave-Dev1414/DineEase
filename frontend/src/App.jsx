@@ -13,9 +13,11 @@ import Login from "./pages/Login"
 
 function AppContent() {
   const location = useLocation()
- const hideLayout =
-  location.pathname === "/signup" ||
-  location.pathname === "/login"
+  const pathname = location.pathname.replace(/\/+$/, "") || "/"
+
+  const hideLayout =
+    pathname === "/signup" ||
+    pathname === "/login"
 
   return (
     <>
