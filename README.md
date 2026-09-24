@@ -262,23 +262,107 @@ AI will **not** be responsible for detecting or recording errors. Error capture 
 
 Sensitive information such as passwords, API keys, access tokens, verification tokens, session credentials, and other secrets must never be stored in error logs or sent to the AI service.
 
-## Platform Administration
+## Platform Owner Hub
 
-The DineEase platform owner and administrators will manage:
+DineEase will include a private **Platform Owner Hub** as the central control center for the DineEase platform. It is broader than the error monitoring dashboard and is intended for platform-level administration, monitoring, management, and operational control.
 
-- Users
-- Restaurants
+The hub will provide areas such as:
+
+- Platform overview and analytics
+- Accounts and users
+- Businesses and restaurants
+- Orders and reservations
+- Payments and transactions
+- Donations and surplus food activity
+- Subscriptions and feature access
 - Business verification
+- Reports
+- Notifications
+- Error logs
+- System health
+- External service monitoring
+- Platform settings
+- Platform Owner profile and security
+- Administrative activity and audit history
+- Deployment management
+
+### Platform Owner Authentication
+
+The Platform Owner will not be presented as a selectable role on the normal customer/business login page. The owner area will use a separate private authentication entry point with backend authorization checks.
+
+Discovering the owner route must not be sufficient to gain access. Access to the Platform Owner Hub requires an authenticated and authorized Platform Owner session.
+
+### Deployment Management
+
+The Platform Owner Hub will eventually provide a controlled deployment interface for major platform updates and minor bug fixes.
+
+Planned deployment capabilities include:
+
+- Current production version
+- Update availability checks
+- Frontend and backend version information
+- Deployment history
+- Deployment status and logs
+- Deployment verification after an update
+- Rollback support
+- Production health checks
+
+The Hub will act as a control interface for the deployment pipeline rather than directly modifying production application files from the browser.
+
+Before sensitive deployment actions are authorized, the Platform Owner will complete an additional security challenge. The challenge will randomly select **one question from a set of seven owner-configured security questions**. The owner must provide the matching answer before that specific sensitive action can proceed.
+
+Security challenges will be tied to the requested sensitive action rather than creating a permanently unlocked deployment state. Failed challenges will block the requested action and can be recorded in the private security/audit system.
+
+### Platform Owner Security
+
+A dedicated owner security setup will allow the Platform Owner to configure seven security questions and their answers before using sensitive administrative functions.
+
+Security answers must be stored securely and never as plaintext. Additional protections such as stronger authentication and multi-factor authentication can be added as the platform matures.
+
+The owner area will maintain relevant security and audit information, including administrative actions, security events, deployment actions, and owner session activity.
+
+## Business Scale & Verification
+
+Business registration will capture the **declared scale of the business** so DineEase can understand the size and operational needs of each business partner.
+
+Planned business scale categories are:
+
+- **Micro**
+- **Small**
+- **Medium**
+- **Large**
+- **Enterprise**
+
+Business scale is a description of the size and operational scope of the business. It is separate from business verification status.
+
+For example:
+
+- Business Scale: Medium
+- Verification Status: Verified
+
+A business may declare its scale during registration, while DineEase may verify or review that information as part of the business verification process.
+
+Scale-aware functionality may eventually allow DineEase to provide different operational tools according to a business's needs, such as multi-location management, staff management, advanced analytics, reporting, integrations, and organization-level controls.
+
+### Platform Administration
+
+The DineEase Platform Owner and authorized administrators will manage:
+
+- Users and accounts
+- Restaurants and businesses
+- Business scale and verification
 - Donation organizations
 - Orders
 - Reservations
 - Surplus food
-- Transactions
-- Reports
+- Transactions and payments
+- Reports and analytics
 - Platform settings
 - Staff and administrator accounts
 - Activity and audit logs
 - AI configuration
+- System health and external services
+- Deployments and production updates
 
 ## Technology Stack
 
