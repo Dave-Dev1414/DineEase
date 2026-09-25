@@ -73,6 +73,7 @@ if (
     try {
         $user = $userController->loginUser($email, $password);
 
+        session_regenerate_id(true);
         $_SESSION["user_id"] = $user["id"];
 
         echo json_encode([

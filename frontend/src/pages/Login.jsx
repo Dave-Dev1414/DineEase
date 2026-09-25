@@ -13,7 +13,7 @@ function Login() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
 
     if (!email.trim()) {
@@ -26,7 +26,34 @@ function Login() {
       return
     }
 
-    setNotification("Login will be connected to your account soon.")
+    try {
+  const response = await fetch(
+    "http://localhost/dineease/api/users?action=login",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      credentials: "include",
+      body: JSON.stringify({
+        email,
+        password
+      })
+    }
+  )
+
+  const data = await response.json()
+
+  if (!response.ok) {
+    setNotification(data.message)
+    return
+  }
+
+  console.log("Logged in user:", data.user)
+} catch (error) {
+  console.error("Login error:", error)
+  setNotification("Something went wrong while logging in.")
+}
   }
 
   return (
