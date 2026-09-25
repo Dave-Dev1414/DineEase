@@ -1,5 +1,16 @@
 <?php
+$sessionTimeout = 30 * 60;
+
 session_start();
+if (isset($_SESSION["last_activity"])) {
+    if (time() - $_SESSION["last_activity"] > $sessionTimeout) {
+        session_unset();
+        session_destroy();
+        session_start();
+    }
+}
+
+$_SESSION["last_activity"] = time();
 
 require_once __DIR__ . "/../config/database.php";
 require_once __DIR__ . "/../controllers/UserController.php";
