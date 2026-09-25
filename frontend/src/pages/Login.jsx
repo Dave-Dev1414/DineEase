@@ -12,6 +12,7 @@ function Login() {
 
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
+  const [rememberMe, setRememberMe] = useState(false)
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -36,9 +37,10 @@ function Login() {
       },
       credentials: "include",
       body: JSON.stringify({
-        email,
-        password
-      })
+      email,
+      password,
+      rememberMe
+})
     }
   )
 
@@ -205,6 +207,17 @@ function Login() {
                   </button>
                 </div>
 
+                <div className="remember-me">
+                   <label>
+                 <input
+                 type="checkbox"
+                 checked={rememberMe}
+                   onChange={(e) => setRememberMe(e.target.checked)}
+                     />
+                 <span>Remember me</span>
+                 </label>
+                </div>
+               
                 <div className="flex justify-end">
                   <button
                     type="button"

@@ -1,6 +1,5 @@
 <?php
 $sessionTimeout = 30 * 60;
-
 session_start();
 if (isset($_SESSION["last_activity"])) {
     if (time() - $_SESSION["last_activity"] > $sessionTimeout) {
@@ -20,13 +19,38 @@ require_once __DIR__ . "/../exceptions/DuplicateEmailException.php";
 header("Content-Type: application/json");
 
 $userController = new UserController($pdo);
+if (!isset($_SESSION["user_id"]) && isset($_COOKIE["dineease_remember"])) {
+    $token = $_COOKIE["dineease_remember"];
+    $tokenHash = hash("sha256", $token);
+
+    $rememberedSession = $userController->findRememberedSession($tokenHash);
+
+    if ($rememberedSession) {
+        session_regenerate_id(true);
+        $_SESSION["user_id"] = $rememberedSession["user_id"];
+        $userController->updateRememberedSessionUsage(
+            $rememberedSession["id"]
+        );
+    } else {
+        setcookie(
+            "dineease_remember",
+            "",
+            [
+                "expires" => time() - 3600,
+                "path" => "/",
+                "httponly" => true,
+                "secure" => false,
+                "samesite" => "Lax"
+            ]
+        );
+    }
+}
 
 if ($_SERVER["REQUEST_METHOD"] === "GET" && isset($_GET["token"])) {
     $token = $_GET["token"];
 
     try {
         $userController->verifyEmail($token);
-
         echo json_encode([
             "success" => true,
             "message" => "Your email has been verified successfully."
@@ -80,12 +104,30 @@ if (
 
     $email = $data["email"] ?? "";
     $password = $data["password"] ?? "";
+    $rememberMe = !empty($data["rememberMe"]);
 
     try {
-        $user = $userController->loginUser($email, $password);
+        $user = $userController->loginUser(
+    $email,
+    $password,
+    $rememberMe
+       );
 
         session_regenerate_id(true);
         $_SESSION["user_id"] = $user["id"];
+        if ($rememberMe && isset($user["remember_token"])) {
+    setcookie(
+        "dineease_remember",
+        $user["remember_token"],
+        [
+            "expires" => time() + (30 * 24 * 60 * 60),
+            "path" => "/",
+            "httponly" => true,
+            "secure" => false,
+            "samesite" => "Lax"
+        ]
+    );
+         }
 
         echo json_encode([
             "success" => true,
@@ -118,6 +160,24 @@ if (
 }
 
 if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_GET["action"]) && $_GET["action"] === "logout") {
+    if (isset($_COOKIE["dineease_remember"])) {
+        $tokenHash = hash("sha256", $_COOKIE["dineease_remember"]);
+
+        $userController->deleteRememberedSession($tokenHash);
+
+        setcookie(
+            "dineease_remember",
+            "",
+            [
+                "expires" => time() - 3600,
+                "path" => "/",
+                "httponly" => true,
+                "secure" => false,
+                "samesite" => "Lax"
+            ]
+        );
+    }
+
     session_unset();
     session_destroy();
 

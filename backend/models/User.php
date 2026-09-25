@@ -160,4 +160,66 @@ class User
 
         return strtotime($user["verification_email_sent_at"]) <= time() - 60;
     }
-}
+
+    public function createRememberedSession(
+    int $userId,
+    string $tokenHash,
+    string $expiresAt
+       ): void
+        {
+    $stmt = $this->db->prepare(
+        "INSERT INTO remembered_sessions
+         (user_id, token_hash, expires_at)
+         VALUES (:user_id, :token_hash, :expires_at)"
+    );
+
+    $stmt->execute([
+        "user_id" => $userId,
+        "token_hash" => $tokenHash,
+        "expires_at" => $expiresAt
+    ]);
+    }
+
+    public function findRememberedSession(string $tokenHash): ?array
+    {
+    $stmt = $this->db->prepare(
+        "SELECT *
+         FROM remembered_sessions
+         WHERE token_hash = :token_hash
+         AND expires_at > NOW()
+         LIMIT 1"
+    );
+
+    $stmt->execute([
+        "token_hash" => $tokenHash
+    ]);
+
+    $session = $stmt->fetch();
+
+    return $session ?: null;
+     }
+
+     public function updateRememberedSessionUsage(int $id): void
+      {
+    $stmt = $this->db->prepare(
+        "UPDATE remembered_sessions
+         SET last_used_at = NOW()
+         WHERE id = :id"
+    );
+
+    $stmt->execute([
+        "id" => $id
+    ]);
+       }
+       public function deleteRememberedSession(string $tokenHash): void
+      {
+    $stmt = $this->db->prepare(
+        "DELETE FROM remembered_sessions
+         WHERE token_hash = :token_hash"
+    );
+
+    $stmt->execute([
+        "token_hash" => $tokenHash
+    ]);
+    }
+       }

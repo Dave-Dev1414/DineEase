@@ -137,7 +137,11 @@ class UserController
         );
     }
 
-    public function loginUser(string $email, string $password): array
+    public function loginUser(
+    string $email,
+    string $password,
+    bool $rememberMe = false
+      ): array
     {
         $email = trim($email);
 
@@ -165,11 +169,40 @@ class UserController
             );
         }
 
-        return $user;
+        if ($rememberMe) {
+    $token = bin2hex(random_bytes(32));
+    $tokenHash = hash("sha256", $token);
+    $expiresAt = date("Y-m-d H:i:s", time() + (30 * 24 * 60 * 60));
+
+    $this->userModel->createRememberedSession(
+        $user["id"],
+        $tokenHash,
+        $expiresAt
+    );
+
+    $user["remember_token"] = $token;
+         }
+
+         return $user;
     }
 
     public function getUserById(int $id): ?array
     {
         return $this->userModel->findById($id);
     }
+
+    public function findRememberedSession(string $tokenHash): ?array
+    {
+    return $this->userModel->findRememberedSession($tokenHash);
+    }
+ 
+    public function updateRememberedSessionUsage(int $id): void
+      {
+    $this->userModel->updateRememberedSessionUsage($id);
+     }
+
+     public function deleteRememberedSession(string $tokenHash): void
+     {
+    $this->userModel->deleteRememberedSession($tokenHash);
+      }
 }
