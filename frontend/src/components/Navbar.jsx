@@ -1,8 +1,10 @@
 import { useState } from "react"
 import { Link } from "react-router-dom"
+import { useAuth } from "../context/AuthContext"
 
 function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const { user } = useAuth()
 
   return (
     <nav className="relative flex items-center justify-between px-6 py-5 md:px-10">
@@ -18,9 +20,32 @@ function Navbar() {
        <Link to="/bookings" className="text-sm font-medium transition-colors duration-300 hover:text-red-600">Bookings</Link>
       </div>
 
-      <Link to="/reserve" className="hidden bg-black px-5 py-3 text-sm font-semibold text-white md:block">
-        Reserve a table
-      </Link>
+      {user ? (
+      <div className="hidden items-center gap-4 md:flex">
+      <span className="text-sm font-medium">{user.name}</span>
+      <button
+      type="button"
+      className="bg-black px-5 py-3 text-sm font-semibold text-white"
+        >
+      Account
+    </button>
+  </div>
+     ) : (
+  <div className="hidden items-center gap-3 md:flex">
+    <Link
+      to="/login"
+      className="px-4 py-3 text-sm font-semibold"
+    >
+      Log in
+    </Link>
+    <Link
+      to="/signup"
+      className="bg-black px-5 py-3 text-sm font-semibold text-white"
+    >
+      Sign up
+    </Link>
+  </div>
+    )}
 
       <button
         type="button"

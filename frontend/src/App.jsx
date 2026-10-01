@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom"
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom"
 import Navbar from "./components/Navbar"
 import Home from "./pages/Home"
 import Discover from "./pages/Discover"
@@ -10,8 +10,11 @@ import VerifyEmail from "./pages/VerifyEmail"
 import CheckYourEmail from "./pages/CheckYourEmail"
 import Footer from "./components/Footer"
 import Login from "./pages/Login"
+import Dashboard from "./pages/Dashboard"
+import { useAuth } from "./context/AuthContext"
 
 function AppContent() {
+  const { user, loading } = useAuth()
   const location = useLocation()
   const pathname = location.pathname.replace(/\/+$/, "") || "/"
 
@@ -24,7 +27,12 @@ function AppContent() {
       {!hideLayout && <Navbar />}
 
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route
+      path="/"
+          element={
+      loading ? null : user ? <Navigate to="/dashboard" replace /> : <Home />
+        }
+        />
         <Route path="/discover" element={<Discover />} />
         <Route path="/reserve" element={<Reserve />} />
         <Route path="/order" element={<Order />} />
@@ -33,6 +41,12 @@ function AppContent() {
         <Route path="/verify-email" element={<VerifyEmail />} />
         <Route path="/check-email" element={<CheckYourEmail />} />
         <Route path="/login" element={<Login />} />
+        <Route
+         path="/dashboard"
+          element={
+        loading ? null : user ? <Dashboard /> : <Navigate to="/login" replace />
+          }
+           />
       </Routes>
 
       {!hideLayout && <Footer />}
