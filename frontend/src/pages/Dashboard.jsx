@@ -41,60 +41,60 @@ function DishCarousel({ title, items }) {
       </div>
 
       <div
-  ref={carouselRef}
-  className="flex gap-5 overflow-x-auto pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
->
-  {items.length === 0 ? (
-    <div className="w-full bg-white border border-black/5 rounded-2xl p-8">
-      <p className="text-black/50">
-        No dishes available yet.
-      </p>
-    </div>
-  ) : (
-    items.map(dish => (
-          <article
-            key={dish.id}
-            className="relative min-w-[260px] sm:min-w-[300px] bg-white rounded-2xl overflow-hidden border border-black/5 shadow-sm hover:shadow-md transition"
-          >
-            {dish.is_new && (
-              <span className="absolute top-4 right-4 z-10 px-3 py-1.5 bg-[#c92a2a] text-white text-[11px] font-bold tracking-wider shadow-sm">
-                NEW
-              </span>
-            )}
+        ref={carouselRef}
+        className="flex gap-5 overflow-x-auto pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+      >
+        {items.length === 0 ? (
+          <div className="w-full bg-white border border-black/5 rounded-2xl p-8">
+            <p className="text-black/50">
+              No dishes available yet.
+            </p>
+          </div>
+        ) : (
+          items.map(dish => (
+            <article
+              key={dish.id}
+              className="relative min-w-[260px] sm:min-w-[300px] bg-white rounded-2xl overflow-hidden border border-black/5 shadow-sm hover:shadow-md transition"
+            >
+              {dish.is_new && (
+                <span className="absolute top-4 right-4 z-10 px-3 py-1.5 bg-[#c92a2a] text-white text-[11px] font-bold tracking-wider shadow-sm">
+                  NEW
+                </span>
+              )}
 
-            <div className="h-56 overflow-hidden">
-              <img
-                src={dish.image_url}
-                alt={dish.name}
-                className="w-full h-full object-cover hover:scale-105 transition duration-500"
-              />
-            </div>
-
-            <div className="p-5">
-              <div className="flex items-start justify-between gap-3">
-                <div>
-                  <h3 className="font-semibold text-lg text-[#171717]">
-                    {dish.name}
-                  </h3>
-
-                  <p className="text-sm text-black/50 mt-1">
-                    {dish.restaurant_name}
-                  </p>
-                </div>
-
-                <ArrowUpRight
-                  size={18}
-                  className="text-black/40 shrink-0"
+              <div className="h-56 overflow-hidden">
+                <img
+                  src={dish.image_url}
+                  alt={dish.name}
+                  className="w-full h-full object-cover hover:scale-105 transition duration-500"
                 />
               </div>
 
-              <p className="font-semibold text-[#c92a2a] mt-4">
-                {dish.price}
-              </p>
-            </div>
-          </article>
-                ))
-  )}
+              <div className="p-5">
+                <div className="flex items-start justify-between gap-3">
+                  <div>
+                    <h3 className="font-semibold text-lg text-[#171717]">
+                      {dish.name}
+                    </h3>
+
+                    <p className="text-sm text-black/50 mt-1">
+                      {dish.restaurant_name}
+                    </p>
+                  </div>
+
+                  <ArrowUpRight
+                    size={18}
+                    className="text-black/40 shrink-0"
+                  />
+                </div>
+
+                <p className="font-semibold text-[#c92a2a] mt-4">
+                  ₦{Number(dish.price).toLocaleString()}
+                </p>
+              </div>
+            </article>
+          ))
+        )}
       </div>
     </section>
   )
@@ -108,18 +108,18 @@ function Dashboard() {
   const [error, setError] = useState("")
 
   useEffect(() => {
-  async function loadDashboard() {
-    try {
-      const data = await getDashboardData()
-      setDishes(data.data.dishes)
-    } catch (error) {
-      setError(error.message)
-    } finally {
-      setLoading(false)
+    async function loadDashboard() {
+      try {
+        const data = await getDashboardData()
+        setDishes(data.data.dishes)
+      } catch (error) {
+        setError(error.message)
+      } finally {
+        setLoading(false)
+      }
     }
-  }
 
-  loadDashboard()
+    loadDashboard()
   }, [])
 
   const availableDishes = dishes.filter(dish => dish.is_available)
@@ -134,7 +134,10 @@ function Dashboard() {
         .toLowerCase()
         .includes(query)
     )
-  }, [search])
+  }, [search, dishes])
+
+  const popularDishes = filteredDishes.slice(0, 4)
+  const newDishes = availableDishes.slice(0, 4)
 
   return (
     <main className="min-h-screen bg-[#fffaf2] px-5 sm:px-8 lg:px-12 py-10">
@@ -215,7 +218,7 @@ function Dashboard() {
 
         <DishCarousel
           title={search ? "Search results" : "Popular near you"}
-          items={filteredDishes}
+          items={search ? filteredDishes : popularDishes}
         />
 
         {!search && (
@@ -274,50 +277,50 @@ function Dashboard() {
                 </span>
               </div>
 
-              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-  {availableDishes.filter(dish => dish.is_new).length === 0 ? (
-    <div className="sm:col-span-2 lg:col-span-3 bg-white border border-black/5 rounded-2xl p-8">
-      <p className="text-black/50">
-        There are no new dishes yet.
-      </p>
-    </div>
-  ) : (
-    availableDishes
-      .filter(dish => dish.is_new)
-      .map(dish => (
-        <article
-          key={dish.id}
-          className="relative bg-white rounded-2xl overflow-hidden border border-black/5 shadow-sm hover:shadow-md transition"
-        >
-          <span className="absolute top-4 right-4 z-10 px-3 py-1.5 bg-[#c92a2a] text-white text-[11px] font-bold tracking-wider shadow-sm">
-            NEW
-          </span>
+              <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                {newDishes.length === 0 ? (
+                  <div className="sm:col-span-2 lg:col-span-4 bg-white border border-black/5 rounded-2xl p-8">
+                    <p className="text-black/50">
+                      There are no dishes yet.
+                    </p>
+                  </div>
+                ) : (
+                  newDishes.map(dish => (
+                    <article
+                      key={dish.id}
+                      className="relative bg-white rounded-2xl overflow-hidden border border-black/5 shadow-sm hover:shadow-md transition"
+                    >
+                      {dish.is_new && (
+                        <span className="absolute top-4 right-4 z-10 px-3 py-1.5 bg-[#c92a2a] text-white text-[11px] font-bold tracking-wider shadow-sm">
+                          NEW
+                        </span>
+                      )}
 
-          <div className="h-52 overflow-hidden">
-            <img
-              src={dish.image_url}
-              alt={dish.name}
-              className="w-full h-full object-cover hover:scale-105 transition duration-500"
-            />
-          </div>
+                      <div className="h-52 overflow-hidden">
+                        <img
+                          src={dish.image_url}
+                          alt={dish.name}
+                          className="w-full h-full object-cover hover:scale-105 transition duration-500"
+                        />
+                      </div>
 
-          <div className="p-5">
-            <h3 className="font-semibold text-lg text-[#171717]">
-              {dish.name}
-            </h3>
+                      <div className="p-5">
+                        <h3 className="font-semibold text-lg text-[#171717]">
+                          {dish.name}
+                        </h3>
 
-            <p className="text-sm text-black/50 mt-1">
-              {dish.restaurant_name}
-            </p>
+                        <p className="text-sm text-black/50 mt-1">
+                          {dish.restaurant_name}
+                        </p>
 
-            <p className="font-semibold text-[#c92a2a] mt-4">
-              ₦{Number(dish.price).toLocaleString()}
-            </p>
-          </div>
-        </article>
-      ))
-  )}
-</div>
+                        <p className="font-semibold text-[#c92a2a] mt-4">
+                          ₦{Number(dish.price).toLocaleString()}
+                        </p>
+                      </div>
+                    </article>
+                  ))
+                )}
+              </div>
             </section>
 
             <section className="grid lg:grid-cols-[1.4fr_1fr] gap-5 pb-10">
