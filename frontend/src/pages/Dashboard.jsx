@@ -56,7 +56,7 @@ function DishCarousel({ title, items }) {
             key={dish.id}
             className="relative min-w-[260px] sm:min-w-[300px] bg-white rounded-2xl overflow-hidden border border-black/5 shadow-sm hover:shadow-md transition"
           >
-            {dish.isNew && (
+            {dish.is_new && (
               <span className="absolute top-4 right-4 z-10 px-3 py-1.5 bg-[#c92a2a] text-white text-[11px] font-bold tracking-wider shadow-sm">
                 NEW
               </span>
