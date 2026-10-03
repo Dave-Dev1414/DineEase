@@ -16,21 +16,9 @@ class DashboardController
 
     public function getDashboardData(int $userId): array
     {
-        $restaurants = $this->restaurantModel->findByOwnerId($userId);
-        $dishes = [];
-
-        foreach ($restaurants as $restaurant) {
-            $restaurantDishes = $this->dishModel->findByRestaurantId($restaurant["id"]);
-
-            foreach ($restaurantDishes as $dish) {
-                $dish["restaurant_name"] = $restaurant["name"];
-                $dishes[] = $dish;
-            }
-        }
-
         return [
-            "restaurants" => $restaurants,
-            "dishes" => $dishes
+            "restaurants" => $this->restaurantModel->findDiscoverable(),
+            "dishes" => $this->dishModel->findAvailableForDiscovery()
         ];
     }
 }
