@@ -64,7 +64,7 @@ function DishCarousel({ title, items }) {
 
             <div className="h-56 overflow-hidden">
               <img
-                src={dish.image}
+                src={dish.image_url}
                 alt={dish.name}
                 className="w-full h-full object-cover hover:scale-105 transition duration-500"
               />
@@ -78,7 +78,7 @@ function DishCarousel({ title, items }) {
                   </h3>
 
                   <p className="text-sm text-black/50 mt-1">
-                    {dish.restaurant}
+                    {dish.restaurant_name}
                   </p>
                 </div>
 
@@ -122,7 +122,7 @@ function Dashboard() {
   loadDashboard()
   }, [])
 
-  const availableDishes = dishes.filter(dish => dish.available)
+  const availableDishes = dishes.filter(dish => dish.is_available)
 
   const filteredDishes = useMemo(() => {
     const query = search.trim().toLowerCase()
@@ -130,7 +130,7 @@ function Dashboard() {
     if (!query) return availableDishes
 
     return availableDishes.filter(dish =>
-      `${dish.name} ${dish.restaurant}`
+      `${dish.name} ${dish.restaurant_name}`
         .toLowerCase()
         .includes(query)
     )
