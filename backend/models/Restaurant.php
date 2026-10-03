@@ -9,6 +9,21 @@ class Restaurant
         $this->db = $db;
     }
 
+    public function findDiscoverable(): array
+    {
+        $stmt = $this->db->prepare("
+            SELECT *
+            FROM restaurants
+            WHERE is_active = TRUE
+            AND verification_status = 'VERIFIED'
+            ORDER BY created_at DESC
+        ");
+
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     public function findByOwnerId(int $ownerId): array
     {
         $stmt = $this->db->prepare("
