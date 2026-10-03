@@ -1,0 +1,19 @@
+CREATE TABLE dishes (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    restaurant_id INT UNSIGNED NOT NULL,
+    name VARCHAR(150) NOT NULL,
+    description TEXT NULL,
+    price DECIMAL(10,2) NOT NULL,
+    image_url VARCHAR(500) NULL,
+    category VARCHAR(100) NULL,
+    is_available BOOLEAN NOT NULL DEFAULT TRUE,
+    is_new BOOLEAN NOT NULL DEFAULT FALSE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+
+    CONSTRAINT fk_dishes_restaurant
+        FOREIGN KEY (restaurant_id)
+        REFERENCES restaurants(id)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+);
