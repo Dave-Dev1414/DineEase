@@ -3,10 +3,25 @@ import { ChevronLeft, ChevronRight, Search, ArrowUpRight } from "lucide-react"
 import { useAuth } from "../context/AuthContext"
 import { getDashboardData } from "../services/dashboardService"
 
+const getDishAgeInDays = dish => {
+  const createdAt = new Date(dish.created_at)
+  const now = new Date()
+  return (now - createdAt) / (1000 * 60 * 60 * 24)
+}
+
+const isRecentlyAdded = dish => {
+  const ageInDays = getDishAgeInDays(dish)
+  return ageInDays >= 0 && ageInDays < 14
+}
+
+const getNewDishLabel = dish => {
+  const ageInDays = Math.floor(getDishAgeInDays(dish))
+  if (ageInDays < 1) return "NEW"
+  return `Added ${ageInDays} day${ageInDays === 1 ? "" : "s"} ago`
+}
 
 function DishCarousel({ title, items }) {
   const carouselRef = useRef(null)
-
   const scroll = direction => {
     carouselRef.current?.scrollBy({
       left: direction === "left" ? -400 : 400,
@@ -56,9 +71,9 @@ function DishCarousel({ title, items }) {
               key={dish.id}
               className="relative min-w-[260px] sm:min-w-[300px] bg-white rounded-2xl overflow-hidden border border-black/5 shadow-sm hover:shadow-md transition"
             >
-              {dish.is_new && (
+              {isRecentlyAdded(dish) && (
                 <span className="absolute top-4 right-4 z-10 px-3 py-1.5 bg-[#c92a2a] text-white text-[11px] font-bold tracking-wider shadow-sm">
-                  NEW
+                  {getNewDishLabel(dish)}
                 </span>
               )}
 
@@ -137,7 +152,10 @@ function Dashboard() {
   }, [search, dishes])
 
   const popularDishes = filteredDishes.slice(0, 4)
-  const newDishes = availableDishes.slice(0, 4)
+
+  const newDishes = availableDishes
+    .filter(isRecentlyAdded)
+    .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
 
   return (
     <main className="min-h-screen bg-[#fffaf2] px-5 sm:px-8 lg:px-12 py-10">
@@ -146,7 +164,6 @@ function Dashboard() {
           from {
             transform: rotate(0deg);
           }
-
           to {
             transform: rotate(360deg);
           }
@@ -156,7 +173,6 @@ function Dashboard() {
           from {
             transform: rotate(360deg);
           }
-
           to {
             transform: rotate(0deg);
           }
@@ -174,7 +190,6 @@ function Dashboard() {
       <div className="max-w-7xl mx-auto">
         <div className="relative overflow-hidden rounded-3xl bg-white border border-black/5 px-6 sm:px-10 py-10 mb-12">
           <div className="absolute -right-16 -top-16 w-44 h-44 rounded-full border-[18px] border-[#c92a2a]/10 dineease-orbit" />
-
           <div className="absolute right-20 bottom-[-70px] w-32 h-32 rounded-full border-[12px] border-black/[0.04] dineease-orbit-reverse" />
 
           <div className="relative z-10 flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
@@ -290,9 +305,9 @@ function Dashboard() {
                       key={dish.id}
                       className="relative bg-white rounded-2xl overflow-hidden border border-black/5 shadow-sm hover:shadow-md transition"
                     >
-                      {dish.is_new && (
+                      {isRecentlyAdded(dish) && (
                         <span className="absolute top-4 right-4 z-10 px-3 py-1.5 bg-[#c92a2a] text-white text-[11px] font-bold tracking-wider shadow-sm">
-                          NEW
+                          {getNewDishLabel(dish)}
                         </span>
                       )}
 
