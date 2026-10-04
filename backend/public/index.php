@@ -17,4 +17,9 @@ if ($requestUri === "/dineease/api/dashboard") {
     exit;
 }
 
+if ($requestUri === "/dineease/api/restaurants") {
+    require_once __DIR__ . "/../routes/restaurants.php";
+    exit;
+}
+
 echo "Route not found";
