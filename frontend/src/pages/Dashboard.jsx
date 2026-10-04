@@ -2,9 +2,6 @@ import { useEffect, useMemo, useRef, useState } from "react"
 import { ChevronLeft, ChevronRight, Search, ArrowUpRight } from "lucide-react"
 import { useAuth } from "../context/AuthContext"
 import { getDashboardData } from "../services/dashboardService"
-import { useNotification } from "../context/NotificationContext"
-
-const { showNotification } = useNotification()
 const getDishAgeInDays = dish => {
   const createdAt = new Date(dish.created_at)
   const now = new Date()
