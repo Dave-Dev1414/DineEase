@@ -12,7 +12,6 @@ import Footer from "./components/Footer"
 import Login from "./pages/Login"
 import Dashboard from "./pages/Dashboard"
 import { useAuth } from "./context/AuthContext"
-import NotificationTest from "./pages/NotificationTest"
 
 function AppContent() {
   const { user, loading } = useAuth()
@@ -42,7 +41,6 @@ function AppContent() {
         <Route path="/verify-email" element={<VerifyEmail />} />
         <Route path="/check-email" element={<CheckYourEmail />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/notification-test" element={<NotificationTest />} />
         <Route
          path="/dashboard"
           element={
