@@ -1,7 +1,9 @@
 import { useEffect, useMemo, useRef, useState } from "react"
 import { ChevronLeft, ChevronRight, Search, ArrowUpRight } from "lucide-react"
 import { useAuth } from "../context/AuthContext"
+import { useNotification } from "../context/NotificationContext"
 import { getDashboardData } from "../services/dashboardService"
+
 const getDishAgeInDays = dish => {
   const createdAt = new Date(dish.created_at)
   const now = new Date()
@@ -116,25 +118,27 @@ function DishCarousel({ title, items }) {
 
 function Dashboard() {
   const { user } = useAuth()
+  const { showNotification } = useNotification()
   const [search, setSearch] = useState("")
   const [dishes, setDishes] = useState([])
   const [loading, setLoading] = useState(true)
-  const [error, setError] = useState("")
 
   useEffect(() => {
-    async function loadDashboard() {
-      try {
-        const data = await getDashboardData()
-        setDishes(data.data.dishes)
-      } catch (error) {
-        setError(error.message)
-      } finally {
-        setLoading(false)
-      }
+  async function loadDashboard() {
+    try {
+      const data = await getDashboardData()
+      setDishes(data.data.dishes)
+    } catch (error) {
+      showNotification(
+        "We couldn't load your dashboard right now. Please try again."
+      )
+    } finally {
+      setLoading(false)
     }
+  }
 
-    loadDashboard()
-  }, [])
+  loadDashboard()
+}, [showNotification])
 
   const availableDishes = dishes.filter(dish => dish.is_available)
 
