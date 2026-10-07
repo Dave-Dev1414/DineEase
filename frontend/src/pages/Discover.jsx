@@ -1,27 +1,39 @@
 import { useEffect, useMemo, useState } from "react"
 import { Search, MapPin, ArrowUpRight } from "lucide-react"
 import { getRestaurants } from "../services/restaurantService"
+import { useNotification } from "../context/NotificationContext"
 
 function Discover() {
+  const { showNotification } = useNotification()
   const [restaurants, setRestaurants] = useState([])
   const [search, setSearch] = useState("")
   const [loading, setLoading] = useState(true)
-  const [error, setError] = useState("")
 
-  useEffect(() => {
-    async function loadRestaurants() {
-      try {
-        const data = await getRestaurants()
-        setRestaurants(data.data.restaurants)
-      } catch (error) {
-        setError(error.message)
-      } finally {
-        setLoading(false)
+useEffect(() => {
+  async function loadRestaurants() {
+    const startTime = Date.now()
+
+    try {
+      const data = await getRestaurants()
+      setRestaurants(data.data.restaurants)
+    } catch (error) {
+      showNotification(
+        "We couldn't load restaurants right now. Please try again."
+      )
+    } finally {
+      const elapsed = Date.now() - startTime
+      const remaining = Math.max(600 - elapsed, 0)
+
+      if (remaining > 0) {
+        await new Promise(resolve => setTimeout(resolve, remaining))
       }
-    }
 
-    loadRestaurants()
-  }, [])
+      setLoading(false)
+    }
+  }
+
+  loadRestaurants()
+}, [showNotification])
 
   const filteredRestaurants = useMemo(() => {
     const query = search.trim().toLowerCase()
@@ -77,19 +89,28 @@ function Discover() {
             {[1, 2, 3].map(item => (
               <div
                 key={item}
-                className="h-[420px] animate-pulse rounded-2xl border border-black/5 bg-white"
-              />
-            ))}
-          </section>
-        ) : error ? (
-          <section className="rounded-2xl border border-black/5 bg-white p-10 text-center">
-            <h2 className="text-xl font-semibold text-[#171717]">
-              Unable to load restaurants
-            </h2>
+                className="overflow-hidden rounded-2xl border border-black/5 bg-white"
+              >
+                <div className="aspect-[4/3] animate-pulse bg-stone-200" />
 
-            <p className="mt-2 text-black/50">
-              {error}
-            </p>
+                <div className="p-6">
+                  <div className="h-7 w-3/5 animate-pulse rounded bg-stone-200" />
+
+                  <div className="mt-3 h-4 w-2/5 animate-pulse rounded bg-stone-200" />
+
+                  <div className="mt-5 space-y-2">
+                    <div className="h-4 w-full animate-pulse rounded bg-stone-200" />
+                    <div className="h-4 w-4/5 animate-pulse rounded bg-stone-200" />
+                  </div>
+
+                  <div className="mt-6 flex items-center justify-between border-t border-black/10 pt-5">
+                    <div className="h-4 w-1/4 animate-pulse rounded bg-stone-200" />
+
+                    <div className="h-10 w-28 animate-pulse rounded bg-stone-200" />
+                  </div>
+                </div>
+              </div>
+            ))}
           </section>
         ) : filteredRestaurants.length === 0 ? (
           <section className="rounded-2xl border border-black/5 bg-white p-10 text-center">
@@ -137,6 +158,7 @@ function Discover() {
 
                         <div className="mt-2 flex items-center gap-1.5 text-sm text-stone-500">
                           <MapPin size={15} />
+
                           <span>
                             {restaurant.city}, {restaurant.state}
                           </span>

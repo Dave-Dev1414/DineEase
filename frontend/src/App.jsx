@@ -28,11 +28,7 @@ function AppContent() {
 
       <Routes>
         <Route
-      path="/"
-          element={
-      loading ? null : user ? <Navigate to="/dashboard" replace /> : <Home />
-        }
-        />
+      path="/" element={<Home />} />
         <Route path="/discover" element={<Discover />} />
         <Route path="/reserve" element={<Reserve />} />
         <Route path="/order" element={<Order />} />
