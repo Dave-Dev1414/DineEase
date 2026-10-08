@@ -1,6 +1,6 @@
 import { ArrowUpRight, Eye, EyeOff, Mail, Lock, UserRound } from "lucide-react"
 import { SiGoogle, SiApple } from "@icons-pack/react-simple-icons"
-import { useState } from "react"
+import { useState, type FormEvent } from "react"
 import { useNavigate } from "react-router-dom"
 import DineEaseNotification from "../components/DineEaseNotification"
 
@@ -16,7 +16,7 @@ function Signup() {
   const [password, setPassword] = useState("")
   const [confirmPassword, setConfirmPassword] = useState("")
 
-  const handleSubmit = async (e) => {
+ const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
     if (!name.trim()) {

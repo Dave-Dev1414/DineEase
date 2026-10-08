@@ -1,6 +1,6 @@
 import { ArrowUpRight, Eye, EyeOff, Mail, Lock } from "lucide-react"
 import { SiGoogle, SiApple } from "@icons-pack/react-simple-icons"
-import { useState } from "react"
+import { useState, type FormEvent } from "react"
 import { useNavigate } from "react-router-dom"
 import DineEaseNotification from "../components/DineEaseNotification"
 import { useAuth } from "../context/AuthContext"
@@ -16,7 +16,7 @@ function Login() {
   const [password, setPassword] = useState("")
   const [rememberMe, setRememberMe] = useState(false)
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setShowResend(false)
 
