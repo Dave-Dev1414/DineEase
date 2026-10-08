@@ -1,6 +1,14 @@
 import { X } from "lucide-react"
 
-function DineEaseNotification({ message, onClose }) {
+type DineEaseNotificationProps = {
+  message: string | null
+  onClose: () => void
+}
+
+function DineEaseNotification({
+  message,
+  onClose
+}: DineEaseNotificationProps) {
   if (!message) return null
 
   return (

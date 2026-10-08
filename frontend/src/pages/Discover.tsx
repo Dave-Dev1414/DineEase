@@ -2,10 +2,11 @@ import { useEffect, useMemo, useState } from "react"
 import { Search, MapPin, ArrowUpRight } from "lucide-react"
 import { getRestaurants } from "../services/restaurantService"
 import { useNotification } from "../context/NotificationContext"
+import type { Restaurant } from "../types/restaurant"
 
 function Discover() {
   const { showNotification } = useNotification()
-  const [restaurants, setRestaurants] = useState([])
+  const [restaurants, setRestaurants] = useState<Restaurant[]>([])
   const [search, setSearch] = useState("")
   const [loading, setLoading] = useState(true)
 

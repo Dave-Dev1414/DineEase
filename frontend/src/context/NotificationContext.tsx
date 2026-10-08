@@ -1,12 +1,24 @@
-import { createContext, useCallback, useContext, useEffect, useState } from "react"
+import { createContext, useCallback, useContext, useEffect,  useState,  type ReactNode } from "react"
 import DineEaseNotification from "../components/DineEaseNotification"
 
-const NotificationContext = createContext(null)
+type NotificationContextValue = {
+  showNotification: (message: string) => void
+  hideNotification: () => void
+}
 
-export function NotificationProvider({ children }) {
-  const [notification, setNotification] = useState(null)
+const NotificationContext =
+  createContext<NotificationContextValue | null>(null)
 
-  const showNotification = useCallback((message) => {
+type NotificationProviderProps = {
+  children: ReactNode
+}
+
+export function NotificationProvider({
+  children
+}: NotificationProviderProps) {
+  const [notification, setNotification] = useState<string | null>(null)
+
+  const showNotification = useCallback((message: string) => {
     setNotification(message)
   }, [])
 
