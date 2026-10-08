@@ -1,8 +1,11 @@
 import { Link } from "react-router-dom"
 import { ArrowUpRight} from "lucide-react"
-import { siInstagram, siGithub, siTiktok, siWhatsapp } from "simple-icons"
+import { siInstagram, siGithub, siTiktok, siWhatsapp, type SimpleIcon } from "simple-icons"
 
-function SocialIcon({ icon, size = 20 }) {
+function SocialIcon({  icon,  size = 20}: {
+  icon: SimpleIcon
+  size?: number
+}) {
   return (
     <svg
       width={size}
