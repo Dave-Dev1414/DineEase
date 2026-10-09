@@ -324,7 +324,7 @@ function Dashboard() {
 
                       <div className="h-52 overflow-hidden">
                         <img
-                          src={dish.image_url}
+                          src={dish.image_url ?? undefined}
                           alt={dish.name}
                           className="w-full h-full object-cover hover:scale-105 transition duration-500"
                         />
