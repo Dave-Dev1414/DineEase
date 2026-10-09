@@ -3,27 +3,33 @@ import { ChevronLeft, ChevronRight, Search, ArrowUpRight } from "lucide-react"
 import { useAuth } from "../context/AuthContext"
 import { useNotification } from "../context/NotificationContext"
 import { getDashboardData } from "../services/dashboardService"
+import type { Dish } from "../types/dashboard"
 
-const getDishAgeInDays = dish => {
+const getDishAgeInDays = (dish: Dish) => {
   const createdAt = new Date(dish.created_at)
   const now = new Date()
-  return (now - createdAt) / (1000 * 60 * 60 * 24)
+  return (now.getTime() - createdAt.getTime()) / (1000 * 60 * 60 * 24)
 }
 
-const isRecentlyAdded = dish => {
+const isRecentlyAdded = (dish: Dish) => {
   const ageInDays = getDishAgeInDays(dish)
   return ageInDays >= 0 && ageInDays < 14
 }
 
-const getNewDishLabel = dish => {
+const getNewDishLabel = (dish: Dish) => {
   const ageInDays = Math.floor(getDishAgeInDays(dish))
   if (ageInDays < 1) return "NEW"
   return `Added ${ageInDays} day${ageInDays === 1 ? "" : "s"} ago`
 }
 
-function DishCarousel({ title, items }) {
-  const carouselRef = useRef(null)
-  const scroll = direction => {
+type DishCarouselProps = {
+  title: string
+  items: Dish[]
+}
+
+function DishCarousel({ title, items }: DishCarouselProps) {
+  const carouselRef = useRef<HTMLDivElement | null>(null)
+  const scroll = (direction: "left" | "right") => {
     carouselRef.current?.scrollBy({
       left: direction === "left" ? -400 : 400,
       behavior: "smooth"
@@ -80,7 +86,7 @@ function DishCarousel({ title, items }) {
 
               <div className="h-56 overflow-hidden">
                 <img
-                  src={dish.image_url}
+                  src={dish.image_url ?? ""}
                   alt={dish.name}
                   className="w-full h-full object-cover hover:scale-105 transition duration-500"
                 />
@@ -120,7 +126,7 @@ function Dashboard() {
   const { user } = useAuth()
   const { showNotification } = useNotification()
   const [search, setSearch] = useState("")
-  const [dishes, setDishes] = useState([])
+  const [dishes, setDishes] = useState<Dish[]>([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -140,7 +146,9 @@ function Dashboard() {
   loadDashboard()
 }, [showNotification])
 
-  const availableDishes = dishes.filter(dish => dish.is_available)
+  const availableDishes = dishes.filter(dish =>
+    dish.is_available === true || dish.is_available === 1 || dish.is_available === "1"
+  )
 
   const filteredDishes = useMemo(() => {
     const query = search.trim().toLowerCase()
@@ -158,7 +166,7 @@ function Dashboard() {
 
   const newDishes = availableDishes
     .filter(isRecentlyAdded)
-    .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+    .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
 
   return (
     <main className="min-h-screen bg-[#fffaf2] px-5 sm:px-8 lg:px-12 py-10">
