@@ -1,6 +1,11 @@
 import { useEffect, useState } from "react"
 import { useNavigate, useSearchParams } from "react-router-dom"
 
+type ResendVerificationResponse = {
+  success: boolean
+  message?: string
+}
+
 function CheckYourEmail() {
   const [searchParams] = useSearchParams()
   const navigate = useNavigate()
@@ -57,7 +62,7 @@ function CheckYourEmail() {
     }
   }
 
-  const maskEmail = email => {
+  const maskEmail = (email: string) => {
     if (!email) return ""
 
     const [username, domain] = email.split("@")

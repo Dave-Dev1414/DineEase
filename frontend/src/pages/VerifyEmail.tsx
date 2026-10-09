@@ -1,13 +1,20 @@
 import { useEffect, useRef, useState } from "react"
 import { useNavigate, useSearchParams } from "react-router-dom"
 
+type VerificationResponse = {
+  success: boolean
+  message: string
+}
+
+type VerificationStatus = "loading" | "success" | "error"
+
 function VerifyEmail() {
   const [searchParams] = useSearchParams()
   const navigate = useNavigate()
   const token = searchParams.get("token")
 
   const [message, setMessage] = useState("Verifying your email...")
-  const [status, setStatus] = useState("loading")
+  const [status, setStatus] = useState<VerificationStatus>("loading")
   const verificationStarted = useRef(false)
 
   useEffect(() => {
@@ -26,7 +33,7 @@ function VerifyEmail() {
     fetch(
       `http://localhost/dineease/api/users?token=${encodeURIComponent(token)}`
     )
-      .then(response => response.json())
+      .then(response => response.json() as Promise<VerificationResponse>)
       .then(data => {
         const elapsed = Date.now() - startedAt
         const remaining = Math.max(4000 - elapsed, 0)

@@ -4,9 +4,9 @@ import { ArrowUpRight } from "lucide-react"
 
 
 function Home() {
-  const crossRef = useRef(null)
+  const crossRef = useRef<HTMLElement | null>(null)
   const [crossVisible, setCrossVisible] = useState(false)
-  const restaurantsRef = useRef(null)
+  const restaurantsRef = useRef<HTMLElement | null>(null)
 const [restaurantsVisible, setRestaurantsVisible] = useState(false)
   useEffect(() => {
     const observer = new IntersectionObserver(
