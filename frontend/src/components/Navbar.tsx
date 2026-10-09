@@ -20,7 +20,7 @@ function Navbar() {
   const closeMenu = () => setIsMenuOpen(false)
 
   return (
-    <nav className="sticky top-0 z-50 border-b border-black/10 bg-[#fffaf2]/95 px-5 py-4 backdrop-blur-xl sm:px-6 lg:px-10">
+    <nav className="sticky top-0 z-50 border-b border-black/10 bg-[#fffaf2]/95 px-5 py-4 backdrop-blur-xl sm:px-6 lg:px-10 relative">
       <div className="relative mx-auto flex max-w-[1600px] items-center justify-between gap-4">
         <Link
           to="/"
@@ -28,9 +28,6 @@ function Navbar() {
           aria-label="DineEase home"
           className="flex shrink-0 items-center gap-3"
         >
-          <span className="grid h-10 w-10 place-items-center rounded-[14px] rounded-bl-[4px] bg-red-600 font-serif text-xl font-semibold text-white">
-            D
-          </span>
           <span className="font-serif text-xl font-medium leading-none tracking-tight sm:text-2xl">
             <span className="text-black">Dine</span><span className="text-red-600">Ease</span>
           </span>
@@ -57,17 +54,10 @@ function Navbar() {
         </div>
 
         <div className="ml-auto flex shrink-0 items-center gap-3 sm:gap-4">
-          <Link
-            to="/reserve"
-            className="hidden items-center gap-2 rounded-full bg-red-600 px-5 py-3 text-xs font-bold uppercase tracking-[0.04em] text-white transition duration-200 hover:-translate-y-0.5 hover:bg-red-700 hover:shadow-[0_9px_22px_rgba(32,25,20,0.16)] sm:inline-flex"
-          >
-            Reserve a table <span aria-hidden="true">↗</span>
-          </Link>
-
           <button
             type="button"
             onClick={() => setIsMenuOpen(open => !open)}
-            className="grid h-10 w-10 place-items-center rounded-xl border border-black/10 text-xl transition-colors hover:border-red-600 hover:text-red-600 lg:hidden"
+            className="grid h-10 w-10 place-items-center rounded-xl border border-black/10 text-xl lg:hidden"
             aria-label={isMenuOpen ? "Close navigation menu" : "Open navigation menu"}
             aria-expanded={isMenuOpen}
             aria-controls="dineease-mobile-navigation"
@@ -100,13 +90,6 @@ function Navbar() {
                 {item.label}
               </Link>
             ))}
-            <Link
-              to="/reserve"
-              onClick={closeMenu}
-              className="mt-5 inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-red-600 px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-red-700"
-            >
-              Reserve a table <span aria-hidden="true">↗</span>
-            </Link>
           </div>
         </div>
       )}
